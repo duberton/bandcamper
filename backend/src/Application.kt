@@ -21,17 +21,22 @@ import io.ktor.auth.authentication
 import io.ktor.auth.oauth
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
 import io.ktor.response.respond
 import io.ktor.response.respondRedirect
+import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.sessions.Sessions
 import io.ktor.sessions.cookie
+import io.ktor.sessions.get
 import io.ktor.sessions.sessions
 import io.ktor.sessions.set
 import org.koin.ktor.ext.Koin
@@ -47,7 +52,8 @@ fun Application.module(testing: Boolean = false) {
     val httpClient = HttpClient(OkHttp)
 
     install(Sessions) {
-        cookie<UserSession>("userSession")
+        cookie<UserSession>(UserSession::class.java.simpleName)
+//        header<UserSession>(UserSession::class.java.simpleName)
     }
 
     install(StatusPages) {
@@ -93,10 +99,25 @@ fun Application.module(testing: Boolean = false) {
 
             get("/callback") {
                 val principal: OAuthAccessTokenResponse.OAuth2? = call.authentication.principal()
+                println(principal?.accessToken.toString())
                 call.sessions.set(UserSession(principal?.accessToken.toString()))
+                call.respond(HttpStatusCode.Accepted)
             }
         }
         albums()
+        get("/hello") {
+            val userSession = call.sessions.get<UserSession>()
+            if (userSession != null) {
+                val userInfo: UserInfo = httpClient.get("https://www.googleapis.com/oauth2/v2/userinfo") {
+                    headers {
+                        append(HttpHeaders.Authorization, "Bearer ${userSession.token}")
+                    }
+                }
+                call.respondText("Hello, ${userInfo.name}!")
+            } else {
+                call.respondRedirect("/")
+            }
+        }
     }
 }
 
