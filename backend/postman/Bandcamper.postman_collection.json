@@ -1,0 +1,58 @@
+{
+	"info": {
+		"_postman_id": "7e092602-d2dc-4fe5-880d-2760734de424",
+		"name": "Bandcamper",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST an album",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"url\": \"https://yautja.bandcamp.com/\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/v1/album",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"album"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET all albums",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/v1/album",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"album"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
