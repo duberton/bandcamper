@@ -6,6 +6,9 @@ import com.duberton.adapter.input.api.v1.request.AlbumRequest
 import com.duberton.application.port.input.FindAllAlbumsPort
 import com.duberton.application.port.input.ScrapeAlbumPagePort
 import io.ktor.application.call
+import io.ktor.auth.authenticate
+import io.ktor.auth.jwt.JWTPrincipal
+import io.ktor.auth.principal
 import io.ktor.http.HttpStatusCode
 import io.ktor.request.receive
 import io.ktor.response.respond
@@ -24,20 +27,22 @@ fun Routing.albums() {
     val logger = LoggerFactory.getLogger(this::class.java)
 
     route("/v1/album") {
-        post {
-            val albumRequest = call.receive<AlbumRequest>()
-            logger.info("Starting to process the creation of an album for the following url {}", albumRequest.url)
-            val domainAlbum = albumRequest.toDomain()
-            scrapeAlbumPagePort.execute(domainAlbum)
-            call.respond(HttpStatusCode.Accepted, domainAlbum.toResponse())
-            logger.info("Done processing the creation of an album")
-        }
-        get {
-            logger.info("Starting to find all the albums")
-            val albums = findAllAlbumsPort.execute()
-            call.respond(HttpStatusCode.OK, albums.map { it.toResponse() })
-            logger.info("Done responding to the find all the albums call")
+        authenticate {
+            post {
+                val albumRequest = call.receive<AlbumRequest>()
+                logger.info("Starting to process the creation of an album for the following url {}", albumRequest.url)
+                val domainAlbum = albumRequest.toDomain()
+                scrapeAlbumPagePort.execute(domainAlbum)
+                call.respond(HttpStatusCode.Accepted, domainAlbum.toResponse())
+                logger.info("Done processing the creation of an album")
+            }
+            get {
+                logger.info("Starting to find all the albums")
+                val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
+                val albums = findAllAlbumsPort.execute()
+                call.respond(HttpStatusCode.OK, albums.map { it.toResponse() })
+                logger.info("Done responding to the find all the albums call")
+            }
         }
     }
-
 }

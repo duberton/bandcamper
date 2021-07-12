@@ -2,7 +2,8 @@ package com.duberton.application.port.output
 
 import com.duberton.application.domain.User
 
-interface SaveUserPort {
+interface HandleLoggedInUserPort {
 
-    fun save(user: User)
+    fun execute(user: User)
+
 }

@@ -4,11 +4,13 @@ val kotlin_version: String by project
 val skrapeit_version: String by project
 val koin_version: String by project
 val mongo_version: String by project
+val kotlix_serialization_version: String by project
 
 plugins {
     application
     kotlin("jvm") version "1.4.32"
     kotlin("plugin.serialization") version "1.4.32"
+    id("idea")
 }
 
 group = "com.duberton"
@@ -24,6 +26,13 @@ repositories {
     jcenter()
 }
 
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
+}
+
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
@@ -35,7 +44,8 @@ dependencies {
     implementation("org.koin:koin-ktor:$koin_version")
     implementation("org.koin:koin-core:$koin_version")
     implementation("io.ktor:ktor-client-okhttp:$ktor_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlix_serialization_version")
+    implementation("io.ktor:ktor-auth-jwt:$ktor_version")
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }

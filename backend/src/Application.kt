@@ -1,5 +1,6 @@
 package com.duberton
 
+import com.duberton.adapter.input.api.Jwt
 import com.duberton.adapter.input.api.v1.albums
 import com.duberton.adapter.input.api.v1.config.apiModule
 import com.duberton.adapter.input.api.v1.error.BusinessException
@@ -14,6 +15,8 @@ import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.auth.Authentication
 import io.ktor.auth.OAuthServerSettings
+import io.ktor.auth.jwt.JWTPrincipal
+import io.ktor.auth.jwt.jwt
 import io.ktor.auth.oauth
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -61,6 +64,16 @@ fun Application.module(testing: Boolean = false) {
                 )
             }
             client = httpClient
+        }
+
+        jwt {
+
+            verifier(Jwt.verifier)
+            realm = "com.duberton.bandcamper"
+            validate {
+                val emailClaim = it.payload.getClaim("email").asString()
+                if (emailClaim != null) JWTPrincipal(it.payload) else null
+            }
         }
     }
 

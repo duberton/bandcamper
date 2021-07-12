@@ -1,8 +1,9 @@
 package com.duberton.adapter.input.api.v1
 
+import com.duberton.adapter.input.api.Jwt
 import com.duberton.adapter.input.api.v1.ext.toDomain
 import com.duberton.adapter.input.api.v1.request.UserInfoRequest
-import com.duberton.application.port.output.SaveUserPort
+import com.duberton.application.port.output.HandleLoggedInUserPort
 import io.ktor.application.call
 import io.ktor.auth.OAuthAccessTokenResponse
 import io.ktor.auth.authenticate
@@ -21,7 +22,7 @@ import org.koin.ktor.ext.inject
 
 fun Routing.googleAuthRoute(httpClient: HttpClient) {
 
-    val saveUserPort by inject<SaveUserPort>()
+    val handleLoggedInUserPort by inject<HandleLoggedInUserPort>()
 
     authenticate("auth-oauth-google") {
         get("/login") {
@@ -35,9 +36,11 @@ fun Routing.googleAuthRoute(httpClient: HttpClient) {
                     append(HttpHeaders.Authorization, "Bearer ${principal?.accessToken}")
                 }
             }
-            val userInfoRequest = Json.decodeFromString(UserInfoRequest.serializer(), userInfoJson)
-            saveUserPort.save(userInfoRequest.toDomain())
-            call.respond(HttpStatusCode.Accepted, userInfoRequest)
+            val userInfoRequest =
+                Json { ignoreUnknownKeys = true }.decodeFromString(UserInfoRequest.serializer(), userInfoJson)
+            val userDomain = userInfoRequest.toDomain()
+            handleLoggedInUserPort.execute(userDomain)
+            call.respond(HttpStatusCode.Accepted, Jwt.generateToken(userDomain))
         }
     }
 }
