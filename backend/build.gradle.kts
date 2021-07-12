@@ -8,6 +8,7 @@ val mongo_version: String by project
 plugins {
     application
     kotlin("jvm") version "1.4.32"
+    kotlin("plugin.serialization") version "1.4.32"
 }
 
 group = "com.duberton"
@@ -34,6 +35,7 @@ dependencies {
     implementation("org.koin:koin-ktor:$koin_version")
     implementation("org.koin:koin-core:$koin_version")
     implementation("io.ktor:ktor-client-okhttp:$ktor_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.2")
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }

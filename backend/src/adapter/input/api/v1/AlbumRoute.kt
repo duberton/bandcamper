@@ -1,6 +1,5 @@
 package com.duberton.adapter.input.api.v1
 
-import com.duberton.UserSession
 import com.duberton.adapter.input.api.v1.ext.toDomain
 import com.duberton.adapter.input.api.v1.ext.toResponse
 import com.duberton.adapter.input.api.v1.request.AlbumRequest
@@ -14,8 +13,6 @@ import io.ktor.routing.Routing
 import io.ktor.routing.get
 import io.ktor.routing.post
 import io.ktor.routing.route
-import io.ktor.sessions.get
-import io.ktor.sessions.sessions
 import org.koin.ktor.ext.inject
 import org.slf4j.LoggerFactory
 
@@ -28,8 +25,6 @@ fun Routing.albums() {
 
     route("/v1/album") {
         post {
-            val userSession = call.sessions.get<UserSession>()
-            val token = userSession?.token
             val albumRequest = call.receive<AlbumRequest>()
             logger.info("Starting to process the creation of an album for the following url {}", albumRequest.url)
             val domainAlbum = albumRequest.toDomain()
