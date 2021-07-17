@@ -1,6 +1,6 @@
 package com.duberton
 
-import com.duberton.adapter.input.api.Jwt
+import com.duberton.adapter.input.api.v1.oauth.Jwt
 import com.duberton.adapter.input.api.v1.albums
 import com.duberton.adapter.input.api.v1.config.apiModule
 import com.duberton.adapter.input.api.v1.error.BusinessException

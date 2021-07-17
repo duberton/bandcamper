@@ -1,6 +1,6 @@
 package com.duberton.adapter.input.api.v1
 
-import com.duberton.adapter.input.api.Jwt
+import com.duberton.adapter.input.api.v1.oauth.Jwt
 import com.duberton.adapter.input.api.v1.ext.toDomain
 import com.duberton.adapter.input.api.v1.request.UserInfoRequest
 import com.duberton.application.port.output.HandleLoggedInUserPort

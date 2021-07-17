@@ -2,6 +2,7 @@ package com.duberton.adapter.output.mongo.ext
 
 import com.duberton.application.domain.Album
 import com.duberton.application.domain.User
+import java.time.LocalDateTime
 import org.bson.Document
 
 fun Album.toDocument() = Document().apply {
@@ -10,6 +11,8 @@ fun Album.toDocument() = Document().apply {
     append("title", title)
     append("releaseDate", releaseDate)
     append("isReleased", isReleased)
+    append("createdAt", LocalDateTime.now())
+    append("email", email)
 }
 
 fun Document.toAlbumDomain() = Album(
@@ -18,7 +21,9 @@ fun Document.toAlbumDomain() = Album(
     title = getString("title"),
     url = getString("url"),
     releaseDate = getString("releaseDate"),
-    isReleased = getBoolean("isReleased")
+    isReleased = getBoolean("isReleased"),
+    createdAt = getDate("createdAt").toString(),
+    updatedAt = getDate("updatedAt")?.toString()
 )
 
 fun User.toDocument() = Document().apply {
@@ -27,6 +32,7 @@ fun User.toDocument() = Document().apply {
     append("pictureUrl", pictureUrl)
     append("country", country)
     append("email", email)
+    append("createdAt", LocalDateTime.now())
 }
 
 fun User.toUpdateDocument() = Document("\$set", Document().apply {
@@ -35,6 +41,7 @@ fun User.toUpdateDocument() = Document("\$set", Document().apply {
     append("pictureUrl", pictureUrl)
     append("country", country)
     append("email", email)
+    append("updatedAt", LocalDateTime.now())
 })
 
 fun Document.toUserDomain() = User(
@@ -43,5 +50,7 @@ fun Document.toUserDomain() = User(
     fullName = getString("fullName"),
     pictureUrl = getString("pictureUrl"),
     country = getString("country"),
-    email = getString("email")
+    email = getString("email"),
+    createdAt = getDate("createdAt").toString(),
+    updatedAt = getDate("updatedAt")?.toString()
 )

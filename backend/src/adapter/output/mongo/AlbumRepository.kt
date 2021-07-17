@@ -1,10 +1,11 @@
 package com.duberton.adapter.output.mongo
 
-import com.duberton.adapter.output.mongo.ext.toDocument
 import com.duberton.adapter.output.mongo.ext.toAlbumDomain
+import com.duberton.adapter.output.mongo.ext.toDocument
 import com.duberton.application.domain.Album
 import com.duberton.application.port.output.AlbumRepositoryPort
 import com.mongodb.MongoClient
+import com.mongodb.client.model.Filters.eq
 
 class AlbumRepository(mongoClient: MongoClient) : AlbumRepositoryPort {
 
@@ -14,7 +15,7 @@ class AlbumRepository(mongoClient: MongoClient) : AlbumRepositoryPort {
         collection.insertOne(album.toDocument())
     }
 
-    override fun findAll(): List<Album> {
-        return collection.find().map { it.toAlbumDomain() }.toList()
+    override fun findByEmail(email: String): List<Album> {
+        return collection.find(eq("email", email)).map { it.toAlbumDomain() }.toList()
     }
 }

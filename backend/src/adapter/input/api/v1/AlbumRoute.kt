@@ -31,17 +31,20 @@ fun Routing.albums() {
             post {
                 val albumRequest = call.receive<AlbumRequest>()
                 logger.info("Starting to process the creation of an album for the following url {}", albumRequest.url)
+                val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
                 val domainAlbum = albumRequest.toDomain()
-                scrapeAlbumPagePort.execute(domainAlbum)
+                scrapeAlbumPagePort.execute(domainAlbum, email)
                 call.respond(HttpStatusCode.Accepted, domainAlbum.toResponse())
                 logger.info("Done processing the creation of an album")
             }
             get {
                 logger.info("Starting to find all the albums")
                 val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
-                val albums = findAllAlbumsPort.execute()
-                call.respond(HttpStatusCode.OK, albums.map { it.toResponse() })
-                logger.info("Done responding to the find all the albums call")
+                email?.let {
+                    val albums = findAllAlbumsPort.execute(email)
+                    call.respond(HttpStatusCode.OK, albums.map { it.toResponse() })
+                    logger.info("Done responding to the find all the albums call")
+                } ?: call.respond(HttpStatusCode.NotFound)
             }
         }
     }

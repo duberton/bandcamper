@@ -16,7 +16,7 @@ class ScrapeAlbumPageUseCase(
     private val albumRepositoryPort: AlbumRepositoryPort
 ) : ScrapeAlbumPagePort {
 
-    override fun execute(album: Album) {
+    override fun execute(album: Album, email: String?) {
         val response = restClientPort.get(album.url)
         response.body?.let {
             val html = htmlDocument(html = it.string())
@@ -43,6 +43,7 @@ class ScrapeAlbumPageUseCase(
             album.releaseDate = parsedReleaseDate.toString()
             album.artist = artist
             album.title = albumTitle
+            album.email = email
             albumRepositoryPort.save(album)
         } ?: throw BusinessException("Empty body")
 

@@ -6,7 +6,7 @@ import com.duberton.application.port.output.AlbumRepositoryPort
 
 class FindAllAlbumsUseCase(private val albumRepositoryPort: AlbumRepositoryPort) : FindAllAlbumsPort {
 
-    override fun execute(): List<Album> {
-        return albumRepositoryPort.findAll()
+    override fun execute(email: String): List<Album> {
+        return albumRepositoryPort.findByEmail(email)
     }
 }

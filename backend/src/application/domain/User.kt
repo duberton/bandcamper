@@ -8,7 +8,9 @@ data class User(
     val fullName: String,
     val pictureUrl: String,
     val country: String,
-    val email: String
+    val email: String,
+    val createdAt: String? = null,
+    val updatedAt: String? = null
 ) {
 
     fun findUserByEmail(userRepositoryPort: UserRepositoryPort): User? {

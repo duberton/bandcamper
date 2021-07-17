@@ -1,4 +1,4 @@
-package com.duberton.adapter.input.api
+package com.duberton.adapter.input.api.v1.oauth
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier

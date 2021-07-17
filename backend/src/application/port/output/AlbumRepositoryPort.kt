@@ -6,6 +6,6 @@ interface AlbumRepositoryPort {
 
     fun save(album: Album)
 
-    fun findAll(): List<Album>
+    fun findByEmail(email: String): List<Album>
 
 }
