@@ -20,6 +20,8 @@ import io.ktor.routing.get
 import kotlinx.serialization.json.Json
 import org.koin.ktor.ext.inject
 
+private val json = Json { ignoreUnknownKeys = true }
+
 fun Routing.googleAuthRoute(httpClient: HttpClient) {
 
     val handleLoggedInUserPort by inject<HandleLoggedInUserPort>()
@@ -36,8 +38,7 @@ fun Routing.googleAuthRoute(httpClient: HttpClient) {
                     append(HttpHeaders.Authorization, "Bearer ${principal?.accessToken}")
                 }
             }
-            val userInfoRequest =
-                Json { ignoreUnknownKeys = true }.decodeFromString(UserInfoRequest.serializer(), userInfoJson)
+            val userInfoRequest = json.decodeFromString(UserInfoRequest.serializer(), userInfoJson)
             val userDomain = userInfoRequest.toDomain()
             handleLoggedInUserPort.execute(userDomain)
             call.respond(HttpStatusCode.Accepted, Jwt.generateToken(userDomain))

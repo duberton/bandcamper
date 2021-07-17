@@ -9,7 +9,7 @@ import java.util.*
 object Jwt {
 
     private const val expireTimeInMs = 12_000_00 * 24
-    private const val secret = "secret"
+    private var secret = System.getenv("JWT_SECRET")
     private val algorithm = Algorithm.HMAC512(secret)
     private const val issuer = "com.duberton.bandcamper"
 
@@ -18,7 +18,7 @@ object Jwt {
         .withIssuer(issuer)
         .build()
 
-    fun generateToken(user: User) = JWT.create()
+    fun generateToken(user: User): String = JWT.create()
         .withSubject("jwt-auth")
         .withIssuer(issuer)
         .withClaim("name", user.fullName)

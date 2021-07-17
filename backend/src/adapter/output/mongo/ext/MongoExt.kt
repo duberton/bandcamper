@@ -29,6 +29,14 @@ fun User.toDocument() = Document().apply {
     append("email", email)
 }
 
+fun User.toUpdateDocument() = Document("\$set", Document().apply {
+    append("googleId", googleId)
+    append("fullName", fullName)
+    append("pictureUrl", pictureUrl)
+    append("country", country)
+    append("email", email)
+})
+
 fun Document.toUserDomain() = User(
     id = getObjectId("_id").toString(),
     googleId = getString("googleId"),
