@@ -1,5 +1,6 @@
 package com.duberton.application.domain
 
+import com.duberton.application.port.output.UserCacheRepositoryPort
 import com.duberton.application.port.output.UserRepositoryPort
 
 data class User(
@@ -12,6 +13,18 @@ data class User(
     val createdAt: String? = null,
     val updatedAt: String? = null
 ) {
+
+    fun findUserByEmailCache(userCacheRepositoryPort: UserCacheRepositoryPort): User? {
+        return userCacheRepositoryPort.findByEmail(email)
+    }
+
+    fun updateCache(userCacheRepositoryPort: UserCacheRepositoryPort) {
+        return userCacheRepositoryPort.update(this)
+    }
+
+    fun saveCache(userCacheRepositoryPort: UserCacheRepositoryPort) {
+        return userCacheRepositoryPort.save(this)
+    }
 
     fun findUserByEmail(userRepositoryPort: UserRepositoryPort): User? {
         return userRepositoryPort.findByEmail(email)

@@ -11,5 +11,5 @@ import org.koin.dsl.module
 val apiModule = module {
     single<ScrapeAlbumPagePort> { ScrapeAlbumPageUseCase(get(), get()) }
     single<FindAllAlbumsPort> { FindAllAlbumsUseCase(get()) }
-    single<HandleLoggedInUserPort> { HandleLoggedInUserUseCase(get()) }
+    single<HandleLoggedInUserPort> { HandleLoggedInUserUseCase(get(), get()) }
 }

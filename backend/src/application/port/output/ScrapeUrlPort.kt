@@ -1,8 +1,8 @@
-package com.duberton.application.port.input
+package com.duberton.application.port.output
 
 import com.duberton.application.domain.Album
 
-interface ScrapeAlbumPagePort {
+interface ScrapeUrlPort {
 
     fun execute(album: Album, email: String?): Album
 

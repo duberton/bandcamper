@@ -5,6 +5,7 @@ val skrapeit_version: String by project
 val koin_version: String by project
 val mongo_version: String by project
 val kotlix_serialization_version: String by project
+val redisson_version: String by project
 
 plugins {
     application
@@ -46,6 +47,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlix_serialization_version")
     implementation("it.skrape:skrapeit:$skrapeit_version")
+    implementation("org.redisson:redisson:$redisson_version")
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }

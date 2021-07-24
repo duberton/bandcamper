@@ -1,4 +1,4 @@
-package com.duberton.adapter.input.api.v1.oauth
+package com.duberton.adapter.input.api.v1.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
@@ -8,10 +8,10 @@ import java.util.*
 
 object Jwt {
 
-    private const val expireTimeInMs = 12_000_00 * 24
+    private const val expireTimeInMs = 1000000 * 60
+    private const val issuer = "com.duberton.bandcamper"
     private var secret = System.getenv("JWT_SECRET")
     private val algorithm = Algorithm.HMAC512(secret)
-    private const val issuer = "com.duberton.bandcamper"
 
     val verifier: JWTVerifier = JWT
         .require(algorithm)
