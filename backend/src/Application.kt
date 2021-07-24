@@ -5,6 +5,7 @@ import com.duberton.adapter.input.api.v1.config.apiModule
 import com.duberton.adapter.input.api.v1.error.BusinessException
 import com.duberton.adapter.input.api.v1.googleAuthRoute
 import com.duberton.adapter.input.api.v1.jwt.Jwt
+import com.duberton.adapter.output.aws.ses.config.sesModule
 import com.duberton.adapter.output.mongo.config.mongoModule
 import com.duberton.adapter.output.okhttp.config.okHttpModules
 import com.duberton.adapter.output.redis.config.redisModule
@@ -72,7 +73,7 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(Koin) {
-        modules(listOf(skraperModule, okHttpModules, apiModule, mongoModule(appConfig), redisModule))
+        modules(listOf(skraperModule, okHttpModules, apiModule, mongoModule(appConfig), redisModule, sesModule))
     }
 
     install(ContentNegotiation) {

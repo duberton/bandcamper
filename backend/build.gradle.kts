@@ -49,6 +49,7 @@ dependencies {
     implementation("it.skrape:skrapeit:$skrapeit_version")
     implementation("org.redisson:redisson:$redisson_version")
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
+    implementation("software.amazon.awssdk:ses:2.17.4")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }
 
@@ -57,3 +58,6 @@ kotlin.sourceSets["test"].kotlin.srcDirs("test")
 
 sourceSets["main"].resources.srcDirs("resources")
 sourceSets["test"].resources.srcDirs("testresources")
+
+val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
+compileKotlin.kotlinOptions.jvmTarget = "11"

@@ -2,10 +2,21 @@ version: '3.5'
 
 services:
   mongodb:
-    image: 'mongo:latest'
+    image: 'mongo:4.0.26'
     ports:
       - '27017:27017'
   redis:
     image: 'redis:latest'
     ports:
       - '6379:6379'
+  localstack:
+    image: 'localstack/localstack:0.12.15'
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=ses
+      - DEBUG=1
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./localstack:/docker-entrypoint-initaws.d"

@@ -16,7 +16,7 @@ class UserCacheRepository(private val redissonClient: RedissonClient) : UserCach
 
     override fun save(user: User) {
         val bucket = redissonClient.getBucket<UserCacheEntity>(user.email, codec)
-        bucket.set(user.toCacheEntity(), 5, TimeUnit.MINUTES)
+        bucket.set(user.toCacheEntity(), 60, TimeUnit.MINUTES)
     }
 
     override fun update(user: User) {
