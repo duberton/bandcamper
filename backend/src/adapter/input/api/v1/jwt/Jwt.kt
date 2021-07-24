@@ -8,7 +8,7 @@ import java.util.*
 
 object Jwt {
 
-    private const val expireTimeInMs = 1000000 * 60
+    private const val expireTimeInMs = 1000 * 60 * 5
     private const val issuer = "com.duberton.bandcamper"
     private var secret = System.getenv("JWT_SECRET")
     private val algorithm = Algorithm.HMAC512(secret)
