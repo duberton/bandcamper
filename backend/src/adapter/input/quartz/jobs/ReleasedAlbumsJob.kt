@@ -1,4 +1,4 @@
-package com.duberton.adapter.input.quartz
+package com.duberton.adapter.input.quartz.jobs
 
 import com.duberton.application.port.input.ProcessReleasedAlbumsPort
 import org.koin.core.component.KoinApiExtension

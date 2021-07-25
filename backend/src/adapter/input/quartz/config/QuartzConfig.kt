@@ -8,5 +8,5 @@ import org.koin.dsl.module
 
 val quartzModule = module {
     single<FindReleasedAlbumsPort> { FindReleasedAlbumsUseCase(get()) }
-    single<ProcessReleasedAlbumsPort> { ProcessReleasedAlbumsUseCase(get()) }
+    single<ProcessReleasedAlbumsPort> { ProcessReleasedAlbumsUseCase(get(), get()) }
 }

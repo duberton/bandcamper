@@ -5,7 +5,7 @@ import com.duberton.adapter.input.api.v1.config.apiModule
 import com.duberton.adapter.input.api.v1.error.BusinessException
 import com.duberton.adapter.input.api.v1.googleAuthRoute
 import com.duberton.adapter.input.api.v1.jwt.Jwt
-import com.duberton.adapter.input.quartz.AlbumJobStarter
+import com.duberton.adapter.input.quartz.JobScheduler
 import com.duberton.adapter.input.quartz.config.quartzModule
 import com.duberton.adapter.output.aws.ses.config.sesModule
 import com.duberton.adapter.output.mongo.config.mongoModule
@@ -100,5 +100,5 @@ fun Application.module(testing: Boolean = false) {
         albums()
     }
 
-    AlbumJobStarter.start()
+    JobScheduler.start(appConfig)
 }
