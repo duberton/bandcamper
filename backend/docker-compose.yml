@@ -5,6 +5,10 @@ services:
     image: 'mongo:4.0.26'
     ports:
       - '27017:27017'
+    environment:
+      MONGO_INITDB_DATABASE: bandcamper
+    volumes:
+      - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
   redis:
     image: 'redis:latest'
     ports:

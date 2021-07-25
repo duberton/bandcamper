@@ -4,6 +4,7 @@ import com.duberton.adapter.input.api.v1.ext.toDomain
 import com.duberton.adapter.input.api.v1.ext.toResponse
 import com.duberton.adapter.input.api.v1.request.AlbumRequest
 import com.duberton.application.port.input.FindAllAlbumsPort
+import com.duberton.application.port.input.ProcessReleasedAlbumsPort
 import com.duberton.application.port.input.ScrapeAlbumPagePort
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -19,6 +20,7 @@ fun Routing.albums() {
 
     val scrapeAlbumPagePort by inject<ScrapeAlbumPagePort>()
     val findAllAlbumsPort by inject<FindAllAlbumsPort>()
+    val processReleasedAlbumsPort by inject<ProcessReleasedAlbumsPort>()
 
     val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -40,6 +42,10 @@ fun Routing.albums() {
                     call.respond(HttpStatusCode.OK, albums.map { it.toResponse() })
                     logger.info("Done responding to the find all the albums call")
                 } ?: call.respond(HttpStatusCode.NotFound)
+            }
+            get("/{releaseDate}") {
+                val releaseDate = call.parameters["releaseDate"]!!
+                processReleasedAlbumsPort.execute(releaseDate)
             }
         }
     }

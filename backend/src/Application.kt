@@ -5,6 +5,8 @@ import com.duberton.adapter.input.api.v1.config.apiModule
 import com.duberton.adapter.input.api.v1.error.BusinessException
 import com.duberton.adapter.input.api.v1.googleAuthRoute
 import com.duberton.adapter.input.api.v1.jwt.Jwt
+import com.duberton.adapter.input.quartz.AlbumJobStarter
+import com.duberton.adapter.input.quartz.config.quartzModule
 import com.duberton.adapter.output.aws.ses.config.sesModule
 import com.duberton.adapter.output.mongo.config.mongoModule
 import com.duberton.adapter.output.okhttp.config.okHttpModules
@@ -73,7 +75,17 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(Koin) {
-        modules(listOf(skraperModule, okHttpModules, apiModule, mongoModule(appConfig), redisModule, sesModule))
+        modules(
+            listOf(
+                skraperModule,
+                okHttpModules,
+                apiModule,
+                mongoModule(appConfig),
+                redisModule,
+                sesModule,
+                quartzModule
+            )
+        )
     }
 
     install(ContentNegotiation) {
@@ -87,4 +99,6 @@ fun Application.module(testing: Boolean = false) {
         googleAuthRoute(httpClient)
         albums()
     }
+
+    AlbumJobStarter.start()
 }

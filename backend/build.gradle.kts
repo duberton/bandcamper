@@ -6,6 +6,7 @@ val koin_version: String by project
 val mongo_version: String by project
 val kotlix_serialization_version: String by project
 val redisson_version: String by project
+val quartz_version: String by project
 
 plugins {
     application
@@ -50,6 +51,7 @@ dependencies {
     implementation("org.redisson:redisson:$redisson_version")
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     implementation("software.amazon.awssdk:ses:2.17.4")
+    implementation("org.quartz-scheduler:quartz:$quartz_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }
 

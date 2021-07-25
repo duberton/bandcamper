@@ -18,4 +18,8 @@ class AlbumRepository(mongoClient: MongoClient) : AlbumRepositoryPort {
     override fun findByEmail(email: String): List<Album> {
         return collection.find(eq("email", email)).map { it.toAlbumDomain() }.toList()
     }
+
+    override fun findByReleaseDate(releaseDate: String): List<Album> {
+        return collection.find(eq("releaseDate", releaseDate)).map { it.toAlbumDomain() }.toList()
+    }
 }
