@@ -50,11 +50,11 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Gradle
-        run: ./gradlew build --exclude-task test
+        run: ./backend/gradlew build --exclude-task test
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: package
-          path: build/libs
+          path: ./backend/build/libs
           if-no-files-found: error
