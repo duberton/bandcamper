@@ -81,8 +81,8 @@ fun Application.module(testing: Boolean = false) {
                 okHttpModules,
                 apiModule,
                 mongoModule(appConfig),
-                redisModule,
-                sesModule,
+                redisModule(appConfig),
+                sesModule(appConfig),
                 quartzModule
             )
         )
