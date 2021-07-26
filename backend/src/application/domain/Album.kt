@@ -1,5 +1,7 @@
 package com.duberton.application.domain
 
+import java.time.LocalDateTime
+
 data class Album(
     val id: String? = null,
     val url: String,
@@ -7,7 +9,8 @@ data class Album(
     var title: String? = null,
     var releaseDate: String? = null,
     var isReleased: Boolean? = null,
-    val createdAt: String? = null,
-    val updatedAt: String? = null,
+    var albumCoverUrl: String? = null,
+    val createdAt: LocalDateTime? = null,
+    val updatedAt: LocalDateTime? = null,
     var email: String? = null
 )

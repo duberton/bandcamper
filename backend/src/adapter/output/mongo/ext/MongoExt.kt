@@ -2,8 +2,10 @@ package com.duberton.adapter.output.mongo.ext
 
 import com.duberton.application.domain.Album
 import com.duberton.application.domain.User
-import java.time.LocalDateTime
 import org.bson.Document
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.util.*
 
 fun Album.toDocument() = Document().apply {
     append("url", url)
@@ -11,7 +13,8 @@ fun Album.toDocument() = Document().apply {
     append("title", title)
     append("releaseDate", releaseDate)
     append("isReleased", isReleased)
-    append("createdAt", LocalDateTime.now())
+    append("albumCoverUrl", albumCoverUrl)
+    append("createdAt", createdAt)
     append("email", email)
 }
 
@@ -22,8 +25,9 @@ fun Document.toAlbumDomain() = Album(
     url = getString("url"),
     releaseDate = getString("releaseDate"),
     isReleased = getBoolean("isReleased"),
-    createdAt = getDate("createdAt").toString(),
-    updatedAt = getDate("updatedAt")?.toString()
+    albumCoverUrl = getString("albumCoverUrl"),
+    createdAt = getDate("createdAt").toLocalDateTime(),
+    updatedAt = getDate("updatedAt")?.toLocalDateTime()
 )
 
 fun User.toDocument() = Document().apply {
@@ -54,3 +58,5 @@ fun Document.toUserDomain() = User(
     createdAt = getDate("createdAt").toString(),
     updatedAt = getDate("updatedAt")?.toString()
 )
+
+fun Date.toLocalDateTime(): LocalDateTime = LocalDateTime.ofInstant(toInstant(), ZoneId.systemDefault())

@@ -16,9 +16,10 @@ fun Album.toResponse() = AlbumResponse(
     artist = artist,
     title = title,
     isReleased = isReleased,
+    albumCoverUrl = albumCoverUrl,
     releaseDate = releaseDate.toString(),
-    createdAt = createdAt,
-    updatedAt = updatedAt
+    createdAt = createdAt.toString(),
+    updatedAt = updatedAt?.toString()
 )
 
 fun UserInfoRequest.toDomain() = User(

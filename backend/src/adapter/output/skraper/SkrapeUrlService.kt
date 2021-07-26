@@ -8,6 +8,7 @@ import it.skrape.core.htmlDocument
 import org.jsoup.nodes.Node
 import org.jsoup.nodes.TextNode
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class SkrapeUrlService(private val restClientPort: RestClientPort) : ScrapeUrlPort {
@@ -18,6 +19,7 @@ class SkrapeUrlService(private val restClientPort: RestClientPort) : ScrapeUrlPo
             val html = htmlDocument(html = it.string())
             val dateElement: Node?
             val documentBody = html.document.body()
+            val albumCoverUrl = documentBody.getElementsByClass("popupImage").firstOrNull()?.attr("href")
             val albumCreditsElement = documentBody.getElementsByClass("tralbumData tralbum-credits")
             val releaseElement = albumCreditsElement.first().childNodes()
                 .find { node -> node is TextNode && node.text().contains("releases") }
@@ -36,7 +38,14 @@ class SkrapeUrlService(private val restClientPort: RestClientPort) : ScrapeUrlPo
             val albumTitle = nameSection.child(0).text()
             val artist = documentBody.getElementById("band-name-location").child(0).text()
             val parsedReleaseDate = LocalDate.parse(releaseDate, DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
-            album.copy(artist = artist, title = albumTitle, releaseDate = parsedReleaseDate.toString(), email = email)
+            album.copy(
+                artist = artist,
+                title = albumTitle,
+                releaseDate = parsedReleaseDate.toString(),
+                email = email,
+                albumCoverUrl = albumCoverUrl,
+                createdAt = LocalDateTime.now()
+            )
         } ?: throw BusinessException("Request for ${album.url} returned an empty body")
     }
 }

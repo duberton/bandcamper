@@ -6,6 +6,7 @@ data class AlbumResponse(
     val title: String?,
     val url: String,
     val isReleased: Boolean?,
+    val albumCoverUrl: String?,
     val releaseDate: String,
     val createdAt: String?,
     val updatedAt: String?
