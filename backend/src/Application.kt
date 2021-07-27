@@ -4,6 +4,7 @@ import com.duberton.adapter.input.api.v1.albums
 import com.duberton.adapter.input.api.v1.config.apiModule
 import com.duberton.adapter.input.api.v1.error.BusinessException
 import com.duberton.adapter.input.api.v1.googleAuthRoute
+import com.duberton.adapter.input.api.v1.healthCheckRoute
 import com.duberton.adapter.input.api.v1.jwt.Jwt
 import com.duberton.adapter.input.quartz.JobScheduler
 import com.duberton.adapter.input.quartz.config.quartzModule
@@ -98,6 +99,7 @@ fun Application.module(testing: Boolean = false) {
     routing {
         googleAuthRoute(httpClient)
         albums()
+        healthCheckRoute()
     }
 
     JobScheduler.start(appConfig)
