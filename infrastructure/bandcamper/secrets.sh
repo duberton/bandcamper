@@ -1,0 +1,1 @@
+kubectl create secret generic google-credentials --from-env-file ../../backend/.googleCredentials

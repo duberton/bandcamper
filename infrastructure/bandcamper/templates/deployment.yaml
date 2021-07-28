@@ -48,6 +48,16 @@ spec:
               value: {{ .Values.env.sesPort | quote }}
             - name: JWT_SECRET
               value: {{ .Values.env.jwtSecret }}
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: googleClientId
+                  name: google-credentials
+            - name: GOOGLE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: googleClientSecret
+                  name: google-credentials
           ports:
             - name: http
               containerPort: 8080
