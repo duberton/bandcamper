@@ -13,7 +13,5 @@ class HandleLoggedInUserUseCase(
     override fun execute(user: User) {
         val userByEmailCache = user.findUserByEmailCache(userCacheRepositoryPort)
         userByEmailCache?.updateCache(userCacheRepositoryPort) ?: user.saveCache(userCacheRepositoryPort)
-//        val userByEmail = user.findUserByEmail(userRepositoryPort)
-//        userByEmail?.update(userRepositoryPort) ?: user.save(userRepositoryPort)
     }
 }
