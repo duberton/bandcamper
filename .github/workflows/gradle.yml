@@ -66,7 +66,7 @@ jobs:
           context: ./backend
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper
+          repository: ${{ github.repository }}/bandcamper
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.sha }}:latest
           push: true
 
