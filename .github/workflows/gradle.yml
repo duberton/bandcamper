@@ -87,3 +87,6 @@ jobs:
         uses: azure/setup-helm@v1
         with:
           token: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      - name: Helm install
+        run: helm install bandcamper charts --debug --timeout 20s --namespace default --values infrastructure/bandcamper/values.yaml
