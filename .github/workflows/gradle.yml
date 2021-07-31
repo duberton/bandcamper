@@ -89,4 +89,4 @@ jobs:
           token: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - name: Helm install
-        run: helm install bandcamper infrastructure/bandcamper --debug --timeout 20s --namespace default
+        run: helm install bandcamper infrastructure/bandcamper --debug
