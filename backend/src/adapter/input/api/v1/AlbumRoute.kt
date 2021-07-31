@@ -30,7 +30,7 @@ fun Routing.albums() {
                 val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
                 val scrapedAlbum = scrapeAlbumPagePort.execute(albumRequest.toDomain(), email)
                 call.respond(HttpStatusCode.Created, scrapedAlbum.toResponse())
-                logger.info("Done processing the creation of the album {}", albumRequest.url)
+                logger.info("Done processing the creation of the following album url {}", albumRequest.url)
             }
             get {
                 val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
