@@ -67,7 +67,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
           repository: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper
-          tags: ${{ github.sha }}:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.sha }}:latest
           push: true
 
 
