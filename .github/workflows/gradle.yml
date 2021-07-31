@@ -58,3 +58,26 @@ jobs:
           name: package
           path: ./backend/build/libs
           if-no-files-found: error
+
+      - name: Build and push the docker image
+      uses: docker/build-push-action@v1.1.0
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+        repository: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper
+        tags: ${{ github.sha }}, latest
+
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checking out sources
+        uses: actions/checkout@v2
+
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v1
+        with:
+          token: ${{ secrets.DOCKER_HUB_TOKEN }}
