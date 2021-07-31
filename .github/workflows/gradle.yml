@@ -59,13 +59,17 @@ jobs:
           path: ./backend/build/libs
           if-no-files-found: error
 
+      - name: Docker hub login
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
       - name: Build and push the docker image
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: ./backend
-          secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.DOCKER_HUB_TOKEN }}
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.sha }}:latest
           push: true
 
