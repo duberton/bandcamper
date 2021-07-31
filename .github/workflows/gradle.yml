@@ -64,9 +64,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./backend
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-          repository: ${{ github.repository }}/bandcamper
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.DOCKER_HUB_TOKEN }}
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.sha }}:latest
           push: true
 
