@@ -50,7 +50,7 @@ jobs:
           distribution: 'adopt'
 
       - name: Build with Gradle
-        run: ./backend/gradlew -b backend/build.gradle.kts build
+        run: ./backend/gradlew -b backend/build.gradle.kts installDist
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
