@@ -15,6 +15,7 @@ class ProcessReleasedAlbumsUseCase(
     override fun execute(releaseDate: String) {
         logger.info("Starting to process all the albums that were released today {}", releaseDate)
         val albums = findReleasedAlbumsPort.find(releaseDate)
+        logger.info("Found {} albums to be processed", albums.size)
         albums.forEach { emailNotificationPort.sendEmail(it) }
         logger.info("Done processing albums that were released today {}", releaseDate)
     }
