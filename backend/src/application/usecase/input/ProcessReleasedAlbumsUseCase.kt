@@ -13,9 +13,9 @@ class ProcessReleasedAlbumsUseCase(
     private val logger = LoggerFactory.getLogger(ProcessReleasedAlbumsUseCase::class.java)
 
     override fun execute(releaseDate: String) {
-        logger.info("Starting to process all the albums that were release today {}", releaseDate)
+        logger.info("Starting to process all the albums that were released today {}", releaseDate)
         val albums = findReleasedAlbumsPort.find(releaseDate)
         albums.forEach { emailNotificationPort.sendEmail(it) }
-        logger.info("Done processing albums that were release today {}", releaseDate)
+        logger.info("Done processing albums that were released today {}", releaseDate)
     }
 }
