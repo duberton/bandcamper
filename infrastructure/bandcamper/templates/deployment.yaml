@@ -58,6 +58,21 @@ spec:
                 secretKeyRef:
                   key: googleClientSecret
                   name: google-credentials
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  key: awsAccessKey
+                  name: aws-credentials
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: awsSecretAccess
+                  name: aws-credentials
+            - name: AWS_DEFAULT_REGION
+              valueFrom:
+                secretKeyRef:
+                  key: awsRegion
+                  name: aws-credentials                         
           ports:
             - name: http
               containerPort: 8080
