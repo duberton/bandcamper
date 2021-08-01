@@ -20,7 +20,7 @@ env:
   jwtSecret: "secret"
 
 imagePullSecrets:
-- name: docker-hub-creds
+  - name: docker-hub-creds
 nameOverride: ""
 fullnameOverride: ""
 
