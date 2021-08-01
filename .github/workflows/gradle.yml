@@ -83,8 +83,8 @@ jobs:
       - name: Checking out sources
         uses: actions/checkout@v2
 
-      - name: setup-yq
-        uses: chrisdickinson/setup-yq@v1.0.0
+      - name: Updating Charts appVersion
+        uses: mikefarah/yq@v4.6.3
         with:
           cmd: yq eval '.appVersion = "${{ github.sha }}"' -i infrastructure/bandcamper/Chart.yaml
 
