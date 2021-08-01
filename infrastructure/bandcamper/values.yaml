@@ -19,7 +19,8 @@ env:
   sesPort: "4566"
   jwtSecret: "secret"
 
-imagePullSecrets: []
+imagePullSecrets:
+- name: docker-hub-creds
 nameOverride: ""
 fullnameOverride: ""
 
