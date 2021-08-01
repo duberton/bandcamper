@@ -6,9 +6,9 @@ replicaCount: 1
 
 image:
   repository: bandcamper
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.16.0"
+  tag: ""
 
 env:
   mongoHost: "minikube"
