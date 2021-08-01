@@ -70,7 +70,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./backend
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/${{ github.sha }}:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper:${{ github.sha }}
           push: true
 
 
@@ -83,10 +83,18 @@ jobs:
       - name: Checking out sources
         uses: actions/checkout@v2
 
-      - name: Helm tool installer
-        uses: azure/setup-helm@v1
+      - name: setup-yq
+        uses: chrisdickinson/setup-yq@v1.0.0
         with:
-          token: ${{ secrets.DOCKER_HUB_TOKEN }}
+          cmd: yq eval '.appVersion = "${{ github.sha }}"' -i infrastructure/bandcamper/Chart.yaml
 
-      - name: Helm install
-        run: helm install bandcamper infrastructure/bandcamper --debug
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Bumping the docker image tag"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ github.token }}
