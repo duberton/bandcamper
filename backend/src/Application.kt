@@ -25,7 +25,6 @@ import io.ktor.http.*
 import io.ktor.jackson.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import io.ktor.sessions.*
 import org.koin.ktor.ext.Koin
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -37,9 +36,6 @@ fun Application.module(testing: Boolean = false) {
     val appConfig = environment.config
 
     val httpClient = HttpClient(OkHttp)
-
-    install(Sessions) {
-    }
 
     install(StatusPages) {
         exception<BusinessException> {
