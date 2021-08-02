@@ -69,9 +69,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
-        args: >
-          -Dsonar.organization=duberton
-          -Dsonar.projectKey=bandcamper
+        with:
+          args: >
+            -Dsonar.organization=duberton
+            -Dsonar.projectKey=bandcamper
 
   publish:
     name: Publish
