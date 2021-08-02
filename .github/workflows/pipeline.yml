@@ -43,10 +43,8 @@ jobs:
       - uses: eskatos/gradle-command-action@v1
         with:
           build-root-directory: backend
+          wrapper-directory: backend
           arguments: installDist
-
-      - name: Build with Gradle
-        run: ./backend/gradlew -b backend/build.gradle.kts installDist
 
       - name: Docker hub login
         uses: docker/login-action@v1 
