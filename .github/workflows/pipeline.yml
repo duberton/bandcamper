@@ -40,15 +40,13 @@ jobs:
           java-version: '11'
           distribution: 'zulu'
 
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          build-root-directory: backend
+          arguments: installDist
+
       - name: Build with Gradle
         run: ./backend/gradlew -b backend/build.gradle.kts installDist
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: package
-          path: ./backend/build/libs
-          if-no-files-found: error
 
       - name: Docker hub login
         uses: docker/login-action@v1 
