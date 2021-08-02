@@ -3,7 +3,7 @@ package com.duberton.adapter.output.redis.config
 import com.duberton.adapter.output.redis.UserCacheRepository
 import com.duberton.application.port.output.UserCacheRepositoryPort
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import io.ktor.config.*
+import io.ktor.config.ApplicationConfig
 import org.koin.dsl.module
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient

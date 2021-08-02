@@ -10,13 +10,15 @@ import org.redisson.api.RedissonClient
 import org.redisson.codec.TypedJsonJacksonCodec
 import java.util.concurrent.TimeUnit
 
+const val TTL_SAVE = 60L
+
 class UserCacheRepository(private val redissonClient: RedissonClient) : UserCacheRepositoryPort {
 
     private val codec = TypedJsonJacksonCodec(UserCacheEntity::class.java, jacksonObjectMapper())
 
     override fun save(user: User) {
         val bucket = redissonClient.getBucket<UserCacheEntity>(user.email, codec)
-        bucket.set(user.toCacheEntity(), 60, TimeUnit.MINUTES)
+        bucket.set(user.toCacheEntity(), TTL_SAVE, TimeUnit.MINUTES)
     }
 
     override fun update(user: User) {

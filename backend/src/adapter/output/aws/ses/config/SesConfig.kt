@@ -2,7 +2,7 @@ package com.duberton.adapter.output.aws.ses.config
 
 import com.duberton.adapter.output.aws.ses.SesEmailNotification
 import com.duberton.application.port.output.EmailNotificationPort
-import io.ktor.config.*
+import io.ktor.config.ApplicationConfig
 import org.koin.dsl.module
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider

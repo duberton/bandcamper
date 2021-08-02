@@ -5,5 +5,4 @@ import com.duberton.application.domain.User
 interface HandleLoggedInUserPort {
 
     fun execute(user: User)
-
 }

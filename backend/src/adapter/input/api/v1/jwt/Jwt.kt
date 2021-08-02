@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.duberton.application.domain.User
-import java.util.*
+import java.util.Date
 
 object Jwt {
 
@@ -25,5 +25,4 @@ object Jwt {
         .withClaim("email", user.email)
         .withExpiresAt(Date(System.currentTimeMillis() + expireTimeInMs))
         .sign(algorithm)
-
 }

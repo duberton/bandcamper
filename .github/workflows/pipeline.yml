@@ -38,7 +38,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adopt'
+          distribution: 'zulu'
 
       - name: Build with Gradle
         run: ./backend/gradlew -b backend/build.gradle.kts installDist
@@ -83,9 +83,9 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git commit -am "Bumping the docker image tag to ${{ github.sha }}"
+          git commit -am "Bumping docker image tag to ${{ github.sha }}"
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@0.6.0
         with:
           github_token: ${{ github.token }}

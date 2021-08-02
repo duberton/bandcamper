@@ -9,5 +9,4 @@ interface UserRepositoryPort {
     fun update(user: User)
 
     fun findByEmail(email: String): User?
-
 }

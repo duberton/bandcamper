@@ -37,5 +37,4 @@ data class User(
     fun update(userRepositoryPort: UserRepositoryPort) {
         userRepositoryPort.update(this)
     }
-
 }

@@ -5,7 +5,7 @@ import com.duberton.application.domain.User
 import org.bson.Document
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.util.*
+import java.util.Date
 
 fun Album.toDocument() = Document().apply {
     append("url", url)

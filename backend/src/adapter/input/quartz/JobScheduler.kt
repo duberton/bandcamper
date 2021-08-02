@@ -1,7 +1,7 @@
 package com.duberton.adapter.input.quartz
 
 import com.duberton.adapter.input.quartz.starters.ReleasedAlbumsStarter
-import io.ktor.config.*
+import io.ktor.config.ApplicationConfig
 import org.quartz.impl.StdSchedulerFactory
 
 object JobScheduler {
@@ -14,5 +14,4 @@ object JobScheduler {
 
         defaultScheduler.start()
     }
-
 }

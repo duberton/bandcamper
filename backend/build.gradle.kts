@@ -13,6 +13,12 @@ plugins {
     kotlin("jvm") version "1.4.32"
     kotlin("plugin.serialization") version "1.4.32"
     id("idea")
+    id("io.gitlab.arturbosch.detekt") version "1.15.0"
+    id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
+}
+
+detekt {
+    autoCorrect = true
 }
 
 group = "com.duberton"
@@ -52,6 +58,7 @@ dependencies {
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     implementation("software.amazon.awssdk:ses:2.17.4")
     implementation("org.quartz-scheduler:quartz:$quartz_version")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }
 

@@ -1,10 +1,16 @@
 package com.duberton.adapter.input.quartz.starters
 
 import com.duberton.adapter.input.quartz.jobs.ReleasedAlbumsJob
-import io.ktor.config.*
-import org.quartz.*
+import io.ktor.config.ApplicationConfig
+import org.quartz.CronScheduleBuilder
+import org.quartz.CronTrigger
+import org.quartz.JobBuilder
+import org.quartz.JobDetail
+import org.quartz.TriggerBuilder
 import java.time.Instant
-import java.util.*
+import java.util.Date
+
+const val START_UP_TIME_RELEASED_ALBUM_JOB = 10L
 
 class ReleasedAlbumsStarter(private val applicationConfig: ApplicationConfig) {
 
@@ -19,7 +25,7 @@ class ReleasedAlbumsStarter(private val applicationConfig: ApplicationConfig) {
         val trigger = TriggerBuilder.newTrigger()
             .withIdentity(ReleasedAlbumsJob::class.simpleName, releasedAlbumJobGroup)
             .withSchedule(CronScheduleBuilder.cronSchedule(releasedAlbumJobCron))
-            .startAt(Date.from(Instant.now().plusMillis(10L)))
+            .startAt(Date.from(Instant.now().plusMillis(START_UP_TIME_RELEASED_ALBUM_JOB)))
             .forJob(job)
             .build()
 

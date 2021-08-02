@@ -9,5 +9,4 @@ interface AlbumRepositoryPort {
     fun findByEmail(email: String): List<Album>
 
     fun findByReleaseDate(releaseDate: String): List<Album>
-
 }
