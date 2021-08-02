@@ -38,36 +38,17 @@ val test by tasks.getting(Test::class) {
         excludes
     }
     finalizedBy(jacocoTestReport)
-    useJUnitPlatform { }
 }
 
 tasks.jacocoTestReport {
-    classDirectories.setFrom(
-        sourceSets.main.get().output.asFileTree.matching {
-            exclude(excludeList)
-        }
-    )
 
     reports {
         html.isEnabled = true
-        html.destination = File("$buildDir/reports/jacoco/report.html")
         xml.isEnabled = true
-        xml.destination = File("$buildDir/reports/jacoco/report.xml")
     }
 }
 
 tasks.jacocoTestCoverageVerification {
-    afterEvaluate {
-        classDirectories.setFrom(
-            files(
-                classDirectories.files.map {
-                    fileTree(it).apply {
-                        exclude(excludeList)
-                    }
-                }
-            )
-        )
-    }
     dependsOn(jacocoTestReport)
     violationRules {
         rule {

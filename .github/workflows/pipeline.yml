@@ -73,11 +73,6 @@ jobs:
           args: >
             -Dsonar.organization=duberton
             -Dsonar.projectKey=bandcamper
-      - uses: eskatos/gradle-command-action@v1
-        with:
-          build-root-directory: backend
-          wrapper-directory: backend
-          arguments: installDist
 
   publish:
     name: Publish
