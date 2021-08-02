@@ -18,6 +18,7 @@ env:
   sesHost: "minikube"
   sesPort: "4566"
   jwtSecret: "secret"
+  urlProvider: "http://localhost:8080/callback"
 
 imagePullSecrets:
   - name: docker-hub-creds

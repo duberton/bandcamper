@@ -58,6 +58,8 @@ spec:
                 secretKeyRef:
                   key: googleClientSecret
                   name: google-credentials
+            - name: GOOGLE_URL_PROVIDER
+              value: {{ .Values.env.urlProvider }}
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:

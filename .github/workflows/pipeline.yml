@@ -73,7 +73,7 @@ jobs:
       - name: Updating Charts appVersion
         uses: mikefarah/yq@v4.6.3
         with:
-          cmd: yq eval '.appVersion = "${{ github.sha }}"' -i infrastructure/bandcamper/Chart.yaml
+          cmd: yq eval '.appVersion = "${{ github.sha }}"' -i infrastructure/helm/Chart.yaml
 
       - name: Commit files
         run: |
