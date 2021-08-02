@@ -18,6 +18,4 @@ resource "helm_release" "bandcamper" {
   name       = "bandcamper"
   repository = ".."
   chart      = "bandcamper"
-  version    = "1.16.0"
-  namespace  = "default"
 }

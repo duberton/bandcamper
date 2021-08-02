@@ -28,11 +28,6 @@ class UserCacheRepository(private val redissonClient: RedissonClient) : UserCach
     }
 
     override fun findByEmail(email: String): User? {
-        return try {
-            val bucket = redissonClient.getBucket<UserCacheEntity>(email, codec)
-            bucket.get().toDomain()
-        } catch (ex: Exception) {
-            null
-        }
+        return redissonClient.getBucket<UserCacheEntity>(email, codec).get()?.toDomain()
     }
 }

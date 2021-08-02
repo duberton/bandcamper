@@ -10,6 +10,7 @@ import org.jsoup.nodes.TextNode
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class SkrapeUrlService(private val restClientPort: RestClientPort) : ScrapeUrlPort {
 
@@ -32,12 +33,13 @@ class SkrapeUrlService(private val restClientPort: RestClientPort) : ScrapeUrlPo
                 album.isReleased = false
             }
             val releaseDateString = (dateElement as TextNode).text()
-            val releaseDate = if (album.isReleased!!) releaseDateString.replace("released", "")
-                .trim() else releaseDateString.replace("releases", "").trim()
+            val releaseDate = album.isReleased?.let { releaseDateString.replace("released", "").trim() }
+                ?: releaseDateString.replace("releases", "").trim()
             val nameSection = documentBody.getElementById("name-section")
             val albumTitle = nameSection.child(0).text()
             val artist = documentBody.getElementById("band-name-location").child(0).text()
-            val parsedReleaseDate = LocalDate.parse(releaseDate, DateTimeFormatter.ofPattern("MMMM dd, yyyy"))
+            val parsedReleaseDate =
+                LocalDate.parse(releaseDate, DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH))
             album.copy(
                 artist = artist,
                 title = albumTitle,

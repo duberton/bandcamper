@@ -52,15 +52,15 @@ fun Application.module(testing: Boolean = false) {
 
     install(Authentication) {
         oauth("auth-oauth-google") {
-            urlProvider = { appConfig.property("oauth.google.urlProvider").getString() }
+            urlProvider = { appConfig.property("ktor.oauth.google.urlProvider").getString() }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
                     authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
                     accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
                     requestMethod = HttpMethod.Post,
-                    clientId = appConfig.property("oauth.google.clientId").getString(),
-                    clientSecret = appConfig.property("oauth.google.clientSecret").getString(),
+                    clientId = appConfig.property("ktor.oauth.google.clientId").getString(),
+                    clientSecret = appConfig.property("ktor.oauth.google.clientSecret").getString(),
                     defaultScopes = listOf("profile", "email")
                 )
             }

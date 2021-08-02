@@ -8,6 +8,8 @@ val kotlix_serialization_version: String by project
 val redisson_version: String by project
 val quartz_version: String by project
 
+val nonLocalEnv: String? = System.getenv("DEV")
+
 plugins {
     application
     kotlin("jvm") version "1.4.32"
