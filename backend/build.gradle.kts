@@ -29,11 +29,52 @@ jacoco {
     toolVersion = "0.8.7"
 }
 
+val jacocoTestReport = tasks.named("jacocoTestReport")
+val excludeList = emptyList<String>()
+
+val test by tasks.getting(Test::class) {
+    configure<JacocoTaskExtension> {
+        isEnabled = true
+        excludes
+    }
+    finalizedBy(jacocoTestReport)
+    useJUnitPlatform { }
+}
+
 tasks.jacocoTestReport {
+    classDirectories.setFrom(
+        sourceSets.main.get().output.asFileTree.matching {
+            exclude(excludeList)
+        }
+    )
+
     reports {
-        xml.required.set(true)
-        csv.required.set(false)
-        html.required.set(false)
+        html.isEnabled = true
+        html.destination = File("$buildDir/reports/jacoco/report.html")
+        xml.isEnabled = true
+        xml.destination = File("$buildDir/reports/jacoco/report.xml")
+    }
+}
+
+tasks.jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories.setFrom(
+            files(
+                classDirectories.files.map {
+                    fileTree(it).apply {
+                        exclude(excludeList)
+                    }
+                }
+            )
+        )
+    }
+    dependsOn(jacocoTestReport)
+    violationRules {
+        rule {
+            limit {
+                minimum = BigDecimal("0.8")
+            }
+        }
     }
 }
 
@@ -48,10 +89,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
-}
-
-plugins.withType<JacocoPlugin> {
-    tasks["test"].finalizedBy("jacocoTestReport")
 }
 
 idea {
@@ -79,7 +116,11 @@ dependencies {
     implementation("software.amazon.awssdk:ses:2.17.4")
     implementation("org.quartz-scheduler:quartz:$quartz_version")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
+    implementation("org.jacoco:org.jacoco.core:0.8.7")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
+    testImplementation("io.mockk:mockk:1.12.0")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.0-M1")
+
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
@@ -90,4 +131,8 @@ sourceSets["test"].resources.srcDirs("testresources")
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }

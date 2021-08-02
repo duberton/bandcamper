@@ -46,7 +46,7 @@ jobs:
           wrapper-directory: backend
           arguments: installDist
   
-      - name: Upload src
+      - name: Upload backend src code
         uses: actions/upload-artifact@v2
         with:
           name: bandcamper
@@ -59,7 +59,7 @@ jobs:
     needs: build
     
     steps:
-      - name: Download src
+      - name: Download backend src code
         uses: actions/download-artifact@v2
         with:
           name: bandcamper
@@ -73,6 +73,9 @@ jobs:
           args: >
             -Dsonar.organization=duberton
             -Dsonar.projectKey=bandcamper
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: detektMain
 
   publish:
     name: Publish
@@ -80,7 +83,7 @@ jobs:
     needs: quality
 
     steps:
-      - name: Download src
+      - name: Download backend src code
         uses: actions/download-artifact@v2
         with:
           name: bandcamper
