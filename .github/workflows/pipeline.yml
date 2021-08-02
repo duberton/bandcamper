@@ -49,7 +49,7 @@ jobs:
       - name: Upload src
         uses: actions/upload-artifact@v2
         with:
-          name: src
+          name: bandcamper
           path: backend
           if-no-files-found: error
   
@@ -62,7 +62,7 @@ jobs:
       - name: Download src
         uses: actions/download-artifact@v2
         with:
-          name: src
+          name: bandcamper
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
@@ -83,7 +83,7 @@ jobs:
       - name: Download src
         uses: actions/download-artifact@v2
         with:
-          name: src
+          name: bandcamper
 
       - name: Docker Hub login
         uses: docker/login-action@v1 
@@ -99,8 +99,8 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper:${{ github.sha }}
           push: true
 
-  deploy:
-    name: Deploy
+  rollout:
+    name: Rollout
     runs-on: ubuntu-latest
     needs: publish
 

@@ -14,15 +14,27 @@ plugins {
     application
     kotlin("jvm") version "1.4.32"
     kotlin("plugin.serialization") version "1.4.32"
+    id("jacoco")
     id("idea")
     id("io.gitlab.arturbosch.detekt") version "1.15.0"
     id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
     id("org.sonarqube") version "3.2.0"
-
 }
 
 detekt {
     autoCorrect = true
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.required.set(false)
+    }
 }
 
 group = "com.duberton"
@@ -36,6 +48,10 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
+}
+
+plugins.withType<JacocoPlugin> {
+    tasks["test"].finalizedBy("jacocoTestReport")
 }
 
 idea {
