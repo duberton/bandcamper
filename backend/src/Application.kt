@@ -52,15 +52,15 @@ fun Application.module(testing: Boolean = false) {
 
     install(Authentication) {
         oauth("auth-oauth-google") {
-            urlProvider = { "http://localhost:8080/callback" }
+            urlProvider = { appConfig.property("oauth.google.urlProvider").getString() }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "google",
                     authorizeUrl = "https://accounts.google.com/o/oauth2/auth",
                     accessTokenUrl = "https://accounts.google.com/o/oauth2/token",
                     requestMethod = HttpMethod.Post,
-                    clientId = System.getenv("GOOGLE_CLIENT_ID"),
-                    clientSecret = System.getenv("GOOGLE_CLIENT_SECRET"),
+                    clientId = appConfig.property("oauth.google.clientId").getString(),
+                    clientSecret = appConfig.property("oauth.google.clientSecret").getString(),
                     defaultScopes = listOf("profile", "email")
                 )
             }
