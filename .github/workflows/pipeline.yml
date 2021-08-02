@@ -70,14 +70,11 @@ jobs:
         with:
           name: src
 
-      - name: Display structure of downloaded files
-        run: ls -R
-
       - name: Builds and pushes the docker image to docker hub
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: ./backend
+          context: .
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper:${{ github.sha }}
           push: true
 
