@@ -17,6 +17,8 @@ plugins {
     id("idea")
     id("io.gitlab.arturbosch.detekt") version "1.15.0"
     id("org.jlleitschuh.gradle.ktlint") version "9.4.1"
+    id("org.sonarqube") version "3.2.0"
+
 }
 
 detekt {
