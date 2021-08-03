@@ -79,7 +79,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=duberton
-            -Dsonar.projectKey=bandcamper
+            -Dsonar.projectKey=duberton_bandcamper
 
   publish:
     name: Publish
