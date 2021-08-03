@@ -24,36 +24,6 @@ plugins {
 detekt {
     autoCorrect = true
 }
-tasks.jacocoTestReport {
-
-    val coverageSourceDirs = fileTree(
-        baseDir = project.projectDir
-    ) {
-        include(
-            "**/src/**"
-        )
-    }
-
-    val classFiles = fileTree(
-        baseDir = buildDir
-    ) {
-        include(
-            "**/*.class"
-        )
-        exclude(
-            "test/**.kt"
-        )
-    }
-
-    classDirectories.setFrom(files(classFiles))
-    sourceDirectories.setFrom(files(coverageSourceDirs))
-
-    executionData.setFrom(files("$buildDir/jacoco/jvmTest.exec"))
-
-    reports {
-        xml.isEnabled = true
-    }
-}
 
 group = "com.duberton"
 version = "0.0.1-SNAPSHOT"
@@ -111,4 +81,20 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports.xml.isEnabled = true
+    reports.html.isEnabled = false
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "duberton_bandcamper")
+        property("sonar.organization", "duberton")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+    }
 }
