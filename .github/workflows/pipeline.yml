@@ -64,8 +64,8 @@ jobs:
         with:
           name: bandcamper
 
-      - name: ls
-        run: ls -R
+      - name: Turn gradlew into executable file
+        run: chmod +x gradlew
 
       - uses: eskatos/gradle-command-action@v1
         with:
