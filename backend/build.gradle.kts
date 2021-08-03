@@ -41,7 +41,7 @@ tasks.jacocoTestReport {
             "**/*.class"
         )
         exclude(
-            "**/test/**"
+            "test/**.kt"
         )
     }
 
@@ -52,7 +52,6 @@ tasks.jacocoTestReport {
 
     reports {
         xml.isEnabled = true
-        html.isEnabled = true
     }
 }
 
