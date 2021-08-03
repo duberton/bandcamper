@@ -1,7 +1,7 @@
 package com.duberton.adapter.input.api.v1
 
-import com.duberton.adapter.input.api.v1.jwt.Jwt
 import com.duberton.adapter.input.api.v1.ext.toDomain
+import com.duberton.adapter.input.api.v1.jwt.Jwt
 import com.duberton.adapter.input.api.v1.request.UserInfoRequest
 import com.duberton.application.port.output.HandleLoggedInUserPort
 import io.ktor.application.call

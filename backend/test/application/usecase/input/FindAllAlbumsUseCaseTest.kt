@@ -21,5 +21,4 @@ class FindAllAlbumsUseCaseTest {
 
         verify { albumRepositoryPort.findByEmail(any()) }
     }
-
 }

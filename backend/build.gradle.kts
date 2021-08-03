@@ -101,7 +101,6 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("io.mockk:mockk:1.12.0")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.0-M1")
-
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")

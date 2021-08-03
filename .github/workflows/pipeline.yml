@@ -64,6 +64,10 @@ jobs:
         with:
           name: bandcamper
 
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          arguments: test
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:

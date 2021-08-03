@@ -39,14 +39,17 @@ fun User.toDocument() = Document().apply {
     append("createdAt", LocalDateTime.now())
 }
 
-fun User.toUpdateDocument() = Document("\$set", Document().apply {
-    append("googleId", googleId)
-    append("fullName", fullName)
-    append("pictureUrl", pictureUrl)
-    append("country", country)
-    append("email", email)
-    append("updatedAt", LocalDateTime.now())
-})
+fun User.toUpdateDocument() = Document(
+    "\$set",
+    Document().apply {
+        append("googleId", googleId)
+        append("fullName", fullName)
+        append("pictureUrl", pictureUrl)
+        append("country", country)
+        append("email", email)
+        append("updatedAt", LocalDateTime.now())
+    }
+)
 
 fun Document.toUserDomain() = User(
     id = getObjectId("_id").toString(),
