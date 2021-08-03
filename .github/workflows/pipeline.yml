@@ -64,6 +64,9 @@ jobs:
         with:
           name: bandcamper
 
+      - name: ls
+        run: ls -R
+
       - uses: eskatos/gradle-command-action@v1
         with:
           arguments: test
