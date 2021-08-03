@@ -24,38 +24,35 @@ plugins {
 detekt {
     autoCorrect = true
 }
-
-jacoco {
-    toolVersion = "0.8.7"
-}
-
-val jacocoTestReport = tasks.named("jacocoTestReport")
-val excludeList = emptyList<String>()
-
-val test by tasks.getting(Test::class) {
-    configure<JacocoTaskExtension> {
-        isEnabled = true
-        excludes
-    }
-    finalizedBy(jacocoTestReport)
-}
-
 tasks.jacocoTestReport {
 
-    reports {
-        html.isEnabled = true
-        xml.isEnabled = true
+    val coverageSourceDirs = fileTree(
+        baseDir = project.projectDir
+    ) {
+        include(
+            "**/src/**"
+        )
     }
-}
 
-tasks.jacocoTestCoverageVerification {
-    dependsOn(jacocoTestReport)
-    violationRules {
-        rule {
-            limit {
-                minimum = BigDecimal("0.8")
-            }
-        }
+    val classFiles = fileTree(
+        baseDir = buildDir
+    ) {
+        include(
+            "**/*.class"
+        )
+        exclude(
+            "**/test/**"
+        )
+    }
+
+    classDirectories.setFrom(files(classFiles))
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+
+    executionData.setFrom(files("$buildDir/jacoco/jvmTest.exec"))
+
+    reports {
+        xml.isEnabled = true
+        html.isEnabled = true
     }
 }
 
