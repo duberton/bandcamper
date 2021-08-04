@@ -1,3 +1,6 @@
+import com.adarshr.gradle.testlogger.theme.ThemeType
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 val logback_version: String by project
 val ktor_version: String by project
 val kotlin_version: String by project
@@ -7,6 +10,10 @@ val mongo_version: String by project
 val kotlix_serialization_version: String by project
 val redisson_version: String by project
 val quartz_version: String by project
+val jacoco_version: String by project
+val easy_random_version: String by project
+val detekt_version: String by project
+val mockk_version: String by project
 
 val nonLocalEnv: String? = System.getenv("DEV")
 
@@ -14,6 +21,7 @@ plugins {
     application
     kotlin("jvm") version "1.4.32"
     kotlin("plugin.serialization") version "1.4.32"
+    id("com.adarshr.test-logger") version "3.0.0"
     id("jacoco")
     id("idea")
     id("io.gitlab.arturbosch.detekt") version "1.15.0"
@@ -62,11 +70,10 @@ dependencies {
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     implementation("software.amazon.awssdk:ses:2.17.4")
     implementation("org.quartz-scheduler:quartz:$quartz_version")
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.15.0")
-    implementation("org.jacoco:org.jacoco.core:0.8.7")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
-    testImplementation("io.mockk:mockk:1.12.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.0-M1")
+    testImplementation("org.jeasy:easy-random-core:$easy_random_version")
+    testImplementation("io.mockk:mockk:$mockk_version")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
@@ -75,26 +82,28 @@ kotlin.sourceSets["test"].kotlin.srcDirs("test")
 sourceSets["main"].resources.srcDirs("resources")
 sourceSets["test"].resources.srcDirs("testresources")
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
+tasks.test {
+    useJUnit()
     finalizedBy(tasks.jacocoTestReport)
 }
 
-tasks.jacocoTestReport {
-    dependsOn(tasks.test)
-    reports.xml.isEnabled = true
-    reports.html.isEnabled = false
+jacoco {
+    toolVersion = jacoco_version
 }
 
-sonarqube {
-    properties {
-        property("sonar.projectKey", "duberton_bandcamper")
-        property("sonar.organization", "duberton")
-        property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        csv.isEnabled = true
+        html.isEnabled = true
     }
+}
+
+testlogger {
+    theme = ThemeType.MOCHA
+    slowThreshold = 5000
 }

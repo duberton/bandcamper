@@ -7,7 +7,6 @@ import com.duberton.application.port.output.AlbumRepositoryPort
 class FindReleasedAlbumsUseCase(private val albumRepositoryPort: AlbumRepositoryPort) : FindReleasedAlbumsPort {
 
     override fun find(releaseDate: String): List<Album> {
-        val releasedAlbums = albumRepositoryPort.findByReleaseDate(releaseDate)
-        return releasedAlbums
+        return albumRepositoryPort.findByReleaseDate(releaseDate)
     }
 }
