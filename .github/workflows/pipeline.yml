@@ -59,20 +59,22 @@ jobs:
     needs: build
     
     steps:
-      - name: Download backend src code
-        uses: actions/download-artifact@v2
-        with:
-          name: bandcamper
+      - name: Fetch sources
+        uses: actions/checkout@v2
 
       - name: Turn gradlew into executable file
-        run: chmod +x gradlew
+        run: chmod +x backend/gradlew
 
       - uses: eskatos/gradle-command-action@v1
         with:
+          build-root-directory: backend
+          wrapper-directory: backend
           arguments: build
 
       - uses: eskatos/gradle-command-action@v1
         with:
+          build-root-directory: backend
+          wrapper-directory: backend
           arguments: test
 
       - name: Run Codecov
