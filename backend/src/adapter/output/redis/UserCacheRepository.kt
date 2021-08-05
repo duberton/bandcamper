@@ -6,9 +6,9 @@ import com.duberton.adapter.output.redis.ext.toDomain
 import com.duberton.application.domain.User
 import com.duberton.application.port.output.UserCacheRepositoryPort
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import java.util.concurrent.TimeUnit
 import org.redisson.api.RedissonClient
 import org.redisson.codec.TypedJsonJacksonCodec
+import java.util.concurrent.TimeUnit
 
 const val TTL_SAVE = 60L
 
