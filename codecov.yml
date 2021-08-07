@@ -5,6 +5,6 @@ coverage:
 
 ignore:
   - "com.duberton.Application.kt"
-  - ".*/*Config.kt"
+  - "**/*Config.kt"
   - ".*/config/.*"
-  - "*Ext.kt"
+  - "**/*Ext.kt"
