@@ -1,6 +1,6 @@
 package com.duberton.adapter.output.aws.ses.config
 
-import com.duberton.adapter.output.aws.ses.SesEmailNotification
+import com.duberton.adapter.output.aws.ses.SesEmailNotificationService
 import com.duberton.application.port.output.EmailNotificationPort
 import io.ktor.config.ApplicationConfig
 import org.koin.dsl.module
@@ -12,7 +12,7 @@ import java.net.URI
 
 fun sesModule(applicationConfig: ApplicationConfig) = module {
     single { buildSesModule(applicationConfig) }
-    single<EmailNotificationPort> { SesEmailNotification(get()) }
+    single<EmailNotificationPort> { SesEmailNotificationService(get()) }
 }
 
 fun buildSesModule(applicationConfig: ApplicationConfig): SesAsyncClient {

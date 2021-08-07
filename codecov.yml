@@ -5,6 +5,9 @@ coverage:
 
 ignore:
   - "com.duberton.Application.kt"
+  - "com.duberton.adapter.input.api.v1.GoogleAuthRoute.kt"
+  - "com.duberton.adapter.input.api.v1.HealthCheckRoute.kt"
+  - "com.duberton.adapter.input.api.v1.jwt.Jwt.kt"
   - "**/*Config.kt"
   - ".*/config/.*"
   - "**/*Ext.kt"

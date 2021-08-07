@@ -9,7 +9,7 @@ import software.amazon.awssdk.services.ses.model.Destination
 import software.amazon.awssdk.services.ses.model.Message
 import software.amazon.awssdk.services.ses.model.SendEmailRequest
 
-class SesEmailNotification(private val sesAsyncClient: SesAsyncClient) : EmailNotificationPort {
+class SesEmailNotificationService(private val sesAsyncClient: SesAsyncClient) : EmailNotificationPort {
 
     override fun sendEmail(album: Album) {
         val sendEmailRequest = SendEmailRequest.builder().source("duberton@gmail.com")

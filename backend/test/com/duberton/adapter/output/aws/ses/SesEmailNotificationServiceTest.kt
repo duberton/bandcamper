@@ -7,15 +7,15 @@ import org.junit.Test
 import software.amazon.awssdk.services.ses.SesAsyncClient
 import software.amazon.awssdk.services.ses.model.SendEmailRequest
 
-class SesEmailNotificationTest {
+class SesEmailNotificationServiceTest {
 
     private val sesAsyncClient = mockk<SesAsyncClient>(relaxed = true)
 
-    private val sesEmailNotification = SesEmailNotification(sesAsyncClient)
+    private val sesEmailNotificationService = SesEmailNotificationService(sesAsyncClient)
 
     @Test
     fun `given an album, when i mail its information, it should invoke the proper client`() {
-        sesEmailNotification.sendEmail(dummyObject())
+        sesEmailNotificationService.sendEmail(dummyObject())
 
         verify { sesAsyncClient.sendEmail(any<SendEmailRequest>()) }
     }
