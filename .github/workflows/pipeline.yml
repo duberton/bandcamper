@@ -69,12 +69,6 @@ jobs:
         with:
           build-root-directory: backend
           wrapper-directory: backend
-          arguments: build
-
-      - uses: eskatos/gradle-command-action@v1
-        with:
-          build-root-directory: backend
-          wrapper-directory: backend
           arguments: test -PexcludeItTests
 
       - name: Run Codecov
