@@ -75,7 +75,7 @@ jobs:
         with:
           build-root-directory: backend
           wrapper-directory: backend
-          arguments: test
+          arguments: test -PexcludeItTests
 
       - name: Run Codecov
         run: bash <(curl -s https://codecov.io/bash)

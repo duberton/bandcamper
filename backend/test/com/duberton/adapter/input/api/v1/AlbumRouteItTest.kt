@@ -18,7 +18,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-class AlbumRouteTest {
+class AlbumRouteItTest {
 
     private val albumApiRoot = "/v1/album"
 
@@ -29,12 +29,14 @@ class AlbumRouteTest {
     @Test
     fun `given a call to create an album, when i perform it, then it should return success`() {
         withApplication(testEnvironment) {
-            val url = "https://yautja.bandcamp.com/"
-            with(handleRequest(HttpMethod.Post, albumApiRoot) {
-                addHeader(HttpHeaders.Authorization, "Bearer ${Jwt.generateToken(dummyObject())}")
-                addHeader(HttpHeaders.ContentType, "application/json")
-                setBody(AlbumRequest(url = url).objectToJson())
-            }) {
+            val url = "https://humanimpact.bandcamp.com/album/ep01"
+            with(
+                handleRequest(HttpMethod.Post, albumApiRoot) {
+                    addHeader(HttpHeaders.Authorization, "Bearer ${Jwt.generateToken(dummyObject())}")
+                    addHeader(HttpHeaders.ContentType, "application/json")
+                    setBody(AlbumRequest(url = url).objectToJson())
+                }
+            ) {
                 val response = response.content?.jsonToObject(AlbumResponse::class.java)
                 assertEquals(url, response?.url)
                 assertNotNull(response?.albumCoverUrl)
@@ -54,5 +56,4 @@ class AlbumRouteTest {
             }
         }
     }
-
 }

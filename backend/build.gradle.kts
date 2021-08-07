@@ -89,6 +89,11 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.test {
+    filter {
+        if (project.hasProperty("excludeItTests")) {
+            excludeTestsMatching("*ItTest")
+        }
+    }
     useJUnit()
     finalizedBy(tasks.jacocoTestReport)
 }
