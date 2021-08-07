@@ -14,6 +14,7 @@ val jacoco_version: String by project
 val easy_random_version: String by project
 val detekt_version: String by project
 val mockk_version: String by project
+val kotest_version: String by project
 
 val nonLocalEnv: String? = System.getenv("DEV")
 
@@ -74,6 +75,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jeasy:easy-random-core:$easy_random_version")
     testImplementation("io.mockk:mockk:$mockk_version")
+    testImplementation("io.kotest:kotest-assertions-ktor:$kotest_version")
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
