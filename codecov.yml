@@ -4,10 +4,10 @@ coverage:
   range: "70...100"
 
 ignore:
-  - "com/duberton/Application.kt"
-  - "com/duberton/adapter/input/api/v1"
-  - "com/duberton/adapter/input/quartz/JobScheduler.kt"
-  - "com;duberton/adapter/input/quartz/starters/ReleasedAlbumsStarter.kt"
+  - "**/Application.kt"
+  - "**/com/duberton/adapter/input/api/v1/**"
+  - "**/com/duberton/adapter/input/quartz/JobScheduler.kt"
+  - "**/com/duberton/adapter/input/quartz/starters/ReleasedAlbumsStarter.kt"
   - "**/*Config.kt"
   - "**/config/**"
   - "**/*Ext.kt"
