@@ -75,6 +75,8 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jeasy:easy-random-core:$easy_random_version")
     testImplementation("io.mockk:mockk:$mockk_version")
+    testImplementation("org.koin:koin-test:$koin_version")
+    testImplementation("io.kotest:kotest-assertions-core:$kotest_version")
     testImplementation("io.kotest:kotest-assertions-ktor:$kotest_version")
 }
 
