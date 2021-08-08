@@ -5,9 +5,9 @@ coverage:
 
 ignore:
   - "**/Application.kt"
-  - "**/com/duberton/adapter/input/api/v1/**"
-  - "**/com/duberton/adapter/input/quartz/JobScheduler.kt"
-  - "**/com/duberton/adapter/input/quartz/starters/ReleasedAlbumsStarter.kt"
+  - "**/api/v1/**"
+  - "**JobScheduler*"
+  - "**ReleasedAlbumsStarter*"
   - "**/*Config.kt"
   - "**/config/**"
   - "**/*Ext.kt"
