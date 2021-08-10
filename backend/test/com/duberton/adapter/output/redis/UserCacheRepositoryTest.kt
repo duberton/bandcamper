@@ -36,4 +36,13 @@ class UserCacheRepositoryTest {
 
         verify { redissonClient.getBucket<UserCacheEntity>(any(), any()) }
     }
+
+    @Test
+    fun `given an user that needs to be found, when i do it, then it should pass`() {
+        every { redissonClient.getBucket<UserCacheEntity>(any(), any()).get() } returns dummyObject()
+
+        userCacheRepository.findByEmail("email")
+
+        verify { redissonClient.getBucket<UserCacheEntity>(any(), any()) }
+    }
 }
