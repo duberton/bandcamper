@@ -33,8 +33,7 @@ class SkrapeUrlService(private val restClientPort: RestClientPort) : ScrapeUrlPo
                 album.isReleased = false
             }
             val releaseDateString = (dateElement as TextNode).text()
-            val releaseDate = album.isReleased?.let { releaseDateString.replace("released", "").trim() }
-                ?: releaseDateString.replace("releases", "").trim()
+            val releaseDate = releaseDateString.replace("released|releases".toRegex(), "").trim()
             val nameSection = documentBody.getElementById("name-section")
             val albumTitle = nameSection.child(0).text()
             val artist = documentBody.getElementById("band-name-location").child(0).text()

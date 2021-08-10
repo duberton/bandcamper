@@ -24,7 +24,7 @@ class SkrapeUrlServiceTest {
     fun `given an url that needs to be scraped and parsed, when i do it, then it should be successful`() {
         val email = "email@gmail.com"
         val album = Album(url = "http://url.com")
-        val content = this.javaClass.classLoader.getResource("skrape-url-content.html")?.readText()
+        val content = this.javaClass.classLoader.getResource("skrape-url-content-released.html")?.readText()
         every { restClientPort.get(any()) } returns Response.Builder()
             .request(Request.Builder().url(album.url).build())
             .message("message")
@@ -36,6 +36,24 @@ class SkrapeUrlServiceTest {
 
         verify { restClientPort.get(any()) }
     }
+
+    @Test
+    fun `given an url of an album that wil be released that needs to be scraped and parsed, when i do it, then it should be successful`() {
+        val email = "email@gmail.com"
+        val album = Album(url = "http://url.com")
+        val content = this.javaClass.classLoader.getResource("skrape-url-content-releases.html")?.readText()
+        every { restClientPort.get(any()) } returns Response.Builder()
+            .request(Request.Builder().url(album.url).build())
+            .message("message")
+            .protocol(Protocol.HTTP_1_1)
+            .code(200)
+            .body(content?.toResponseBody("text/html".toMediaType())).build()
+
+        skrapeUrlService.execute(album, email)
+
+        verify { restClientPort.get(any()) }
+    }
+
 
     @Test
     fun `given an invalid url that returns no body, when i do it, then the response should he handled gracefully`() {
