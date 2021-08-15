@@ -11,3 +11,4 @@ ignore:
   - "**/*Config.kt"
   - "**/config/**"
   - "**/*Ext.kt"
+  - "**/SkrapeDslUrlService.kt"
