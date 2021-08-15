@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 data class Album(
     val id: String? = null,
-    val url: String,
+    val url: String = "",
     var artist: String? = null,
     var title: String? = null,
     var releaseDate: String? = null,

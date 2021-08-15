@@ -15,6 +15,7 @@ val easy_random_version: String by project
 val detekt_version: String by project
 val mockk_version: String by project
 val kotest_version: String by project
+val wiremock_version: String by project
 
 val nonLocalEnv: String? = System.getenv("DEV")
 
@@ -66,7 +67,8 @@ dependencies {
     implementation("org.koin:koin-core:$koin_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlix_serialization_version")
-    implementation("it.skrape:skrapeit:$skrapeit_version")
+    implementation("it.skrape:skrapeit-http-fetcher:$skrapeit_version")
+    implementation("it.skrape:skrapeit-html-parser:$skrapeit_version")
     implementation("org.redisson:redisson:$redisson_version")
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     implementation("software.amazon.awssdk:ses:2.17.4")
@@ -78,6 +80,9 @@ dependencies {
     testImplementation("org.koin:koin-test:$koin_version")
     testImplementation("io.kotest:kotest-assertions-core:$kotest_version")
     testImplementation("io.kotest:kotest-assertions-ktor:$kotest_version")
+    testImplementation("com.github.tomakehurst:wiremock-standalone:$wiremock_version") {
+        exclude(group = "junit")
+    }
 }
 
 kotlin.sourceSets["main"].kotlin.srcDirs("src")
@@ -113,6 +118,6 @@ tasks.jacocoTestReport {
 }
 
 testlogger {
-    theme = ThemeType.MOCHA
+    theme = ThemeType.STANDARD
     slowThreshold = 5000
 }

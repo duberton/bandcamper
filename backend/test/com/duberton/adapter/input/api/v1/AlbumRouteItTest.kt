@@ -23,7 +23,7 @@ class AlbumRouteItTest {
     private val albumApiRoot = "/v1/album"
 
     private val testEnvironment = createTestEnvironment {
-        config = HoconApplicationConfig(ConfigFactory.load("application.conf"))
+        config = HoconApplicationConfig(ConfigFactory.load("application-test.conf"))
     }
 
     @Test

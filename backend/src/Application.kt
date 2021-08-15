@@ -105,5 +105,7 @@ fun Application.module(testing: Boolean = false) {
         healthCheckRoute()
     }
 
-    JobScheduler.start(appConfig)
+    val isTesting = appConfig.property("ktor.testing").getString()
+
+    if (isTesting == "false") JobScheduler.start(appConfig)
 }
