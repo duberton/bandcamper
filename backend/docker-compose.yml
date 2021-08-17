@@ -30,8 +30,29 @@ services:
       - "./infrastructure/localstack:/docker-entrypoint-initaws.d"
     networks:
       - bandcamper
+  prometheus:
+    hostname: prometheus
+    image: prom/prometheus:v2.29.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/prometheus:/etc/prometheus
+    networks:
+      - observability
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  grafana:
+    image: grafana/grafana:5.1.0
+    ports:
+      - "3001:3000"
+    user: "104"
+    networks:
+      - observability
 
 networks:
   bandcamper:
     name: bandcamper
+    driver: bridge
+  observability:
+    name: observability
     driver: bridge

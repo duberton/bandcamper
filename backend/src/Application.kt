@@ -6,6 +6,7 @@ import com.duberton.adapter.input.api.v1.error.BusinessException
 import com.duberton.adapter.input.api.v1.googleAuthRoute
 import com.duberton.adapter.input.api.v1.healthCheckRoute
 import com.duberton.adapter.input.api.v1.jwt.Jwt
+import com.duberton.adapter.input.api.v1.metricsRoute
 import com.duberton.adapter.input.quartz.JobScheduler
 import com.duberton.adapter.input.quartz.config.quartzModule
 import com.duberton.adapter.output.aws.ses.config.sesModule
@@ -30,9 +31,19 @@ import io.ktor.features.StatusPages
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
+import io.ktor.metrics.micrometer.MicrometerMetrics
 import io.ktor.response.respond
 import io.ktor.routing.routing
+import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics
+import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics
+import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics
+import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics
+import io.micrometer.core.instrument.binder.system.FileDescriptorMetrics
+import io.micrometer.core.instrument.binder.system.ProcessorMetrics
+import io.micrometer.core.instrument.binder.system.UptimeMetrics
+import io.micrometer.prometheus.PrometheusMeterRegistry
 import org.koin.ktor.ext.Koin
+import org.koin.ktor.ext.get
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -92,6 +103,19 @@ fun Application.module(testing: Boolean = false) {
         )
     }
 
+    install(MicrometerMetrics) {
+        registry = get<PrometheusMeterRegistry>()
+        meterBinders = listOf(
+            ClassLoaderMetrics(),
+            JvmMemoryMetrics(),
+            JvmGcMetrics(),
+            ProcessorMetrics(),
+            JvmThreadMetrics(),
+            FileDescriptorMetrics(),
+            UptimeMetrics()
+        )
+    }
+
     install(ContentNegotiation) {
         jackson {
             enable(SerializationFeature.INDENT_OUTPUT)
@@ -103,6 +127,7 @@ fun Application.module(testing: Boolean = false) {
         googleAuthRoute(httpClient)
         albums()
         healthCheckRoute()
+        metricsRoute()
     }
 
     val isTesting = appConfig.property("ktor.testing").getString()

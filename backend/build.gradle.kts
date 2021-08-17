@@ -16,6 +16,7 @@ val detekt_version: String by project
 val mockk_version: String by project
 val kotest_version: String by project
 val wiremock_version: String by project
+val prometheus_version: String by project
 
 val nonLocalEnv: String? = System.getenv("DEV")
 
@@ -59,6 +60,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("io.ktor:ktor-server-core:$ktor_version")
+    implementation("io.ktor:ktor-metrics-micrometer:$ktor_version")
     implementation("io.ktor:ktor-jackson:$ktor_version")
     implementation("io.ktor:ktor-auth:$ktor_version")
     implementation("io.ktor:ktor-client-okhttp:$ktor_version")
@@ -73,6 +75,7 @@ dependencies {
     implementation("org.mongodb:mongo-java-driver:$mongo_version")
     implementation("software.amazon.awssdk:ses:2.17.4")
     implementation("org.quartz-scheduler:quartz:$quartz_version")
+    implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jeasy:easy-random-core:$easy_random_version")

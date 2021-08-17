@@ -7,6 +7,10 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val skraperModule = module {
-    single<ScrapeUrlPort>(named("standardSkrape")) { SkrapeUrlService(get()) }
-    single<ScrapeUrlPort>(named("dslSkrape")) { SkrapeDslUrlService() }
+    single<ScrapeUrlPort>(named(STANDARD_SKRAPE_NAME)) { SkrapeUrlService(get()) }
+    single<ScrapeUrlPort>(named(DSL_SKRAPE_NAME)) { SkrapeDslUrlService() }
 }
+
+const val DSL_SKRAPE_NAME = "dslSkrape"
+const val STANDARD_SKRAPE_NAME = "standardSkrape"
+
