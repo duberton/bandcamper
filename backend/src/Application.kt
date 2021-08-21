@@ -26,8 +26,10 @@ import io.ktor.auth.jwt.jwt
 import io.ktor.auth.oauth
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
+import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.features.StatusPages
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
 import io.ktor.http.HttpStatusCode
 import io.ktor.jackson.jackson
@@ -87,6 +89,16 @@ fun Application.module(testing: Boolean = false) {
                 if (emailClaim != null) JWTPrincipal(it.payload) else null
             }
         }
+    }
+
+    install(CORS) {
+        anyHost()
+        allowSameOrigin = true
+        header(HttpHeaders.Authorization)
+        header(HttpHeaders.ContentType)
+        header(HttpHeaders.AccessControlAllowOrigin)
+        allowNonSimpleContentTypes = true
+        method(HttpMethod.Get)
     }
 
     install(Koin) {
