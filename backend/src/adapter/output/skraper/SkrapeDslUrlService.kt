@@ -61,7 +61,7 @@ class SkrapeDslUrlService : ScrapeUrlPort {
                         }
                     }
                 }
-            }.copy(url = album.url, createdAt = LocalDateTime.now(), email = album.email)
+            }.copy(url = album.url, createdAt = LocalDateTime.now(), email = email)
         }
     }
 }

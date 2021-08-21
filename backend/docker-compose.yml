@@ -45,7 +45,9 @@ services:
     image: grafana/grafana:5.1.0
     ports:
       - "3001:3000"
-    user: "104"
+    volumes:
+      - './infrastructure/grafana:/etc/grafana/provisioning'
+      - './infrastructure/grafana/dashboards/prometheus/:/var/lib/grafana/dashboards'
     networks:
       - observability
 
