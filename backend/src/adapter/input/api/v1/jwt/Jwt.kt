@@ -19,7 +19,7 @@ object Jwt {
         .build()
 
     fun generateToken(user: User): String = JWT.create()
-        .withSubject("jwt-auth")
+        .withSubject("bandcamper-auth")
         .withIssuer(issuer)
         .withClaim("name", user.fullName)
         .withClaim("email", user.email)

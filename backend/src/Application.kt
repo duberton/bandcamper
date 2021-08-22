@@ -1,6 +1,7 @@
 package com.duberton
 
 import com.duberton.adapter.input.api.v1.albums
+import com.duberton.adapter.input.api.v1.authenticateRoute
 import com.duberton.adapter.input.api.v1.config.apiModule
 import com.duberton.adapter.input.api.v1.error.BusinessException
 import com.duberton.adapter.input.api.v1.googleAuthRoute
@@ -95,10 +96,11 @@ fun Application.module(testing: Boolean = false) {
         anyHost()
         allowSameOrigin = true
         header(HttpHeaders.Authorization)
-        header(HttpHeaders.ContentType)
         header(HttpHeaders.AccessControlAllowOrigin)
+        CORS.Configuration.CorsSimpleRequestHeaders.forEach { header(it) }
         allowNonSimpleContentTypes = true
         method(HttpMethod.Get)
+        method(HttpMethod.Post)
     }
 
     install(Koin) {
@@ -136,8 +138,9 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
-        googleAuthRoute(httpClient)
         albums()
+        googleAuthRoute(httpClient)
+        authenticateRoute(httpClient)
         healthCheckRoute()
         metricsRoute()
     }
