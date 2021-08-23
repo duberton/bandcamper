@@ -1,8 +1,8 @@
 package com.duberton.application.domain
 
+import org.bson.codecs.pojo.annotations.BsonId
 import java.time.LocalDate
 import java.time.LocalDateTime
-import org.bson.codecs.pojo.annotations.BsonId
 
 data class Album(
     @BsonId

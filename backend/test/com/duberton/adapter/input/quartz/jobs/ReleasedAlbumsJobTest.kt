@@ -24,7 +24,7 @@ class ReleasedAlbumsJobTest : KoinTest {
     private val releasedAlbumsJob = ReleasedAlbumsJob()
 
     @Test
-    fun `given a job to process album that were released, when the time is due, then the proper ports should be invoked`() {
+    fun `given a job to process album that were released, when the time is due, then it should pass`() {
         val processReleasedAlbumsPort = declareMock<ProcessReleasedAlbumsPort>()
         every { processReleasedAlbumsPort.execute(any()) } returns Unit
         val jobExecutionContext = mockk<JobExecutionContext>(relaxed = true)

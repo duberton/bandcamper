@@ -13,4 +13,3 @@ val skraperModule = module {
 
 const val DSL_SKRAPE_NAME = "dslSkrape"
 const val STANDARD_SKRAPE_NAME = "standardSkrape"
-

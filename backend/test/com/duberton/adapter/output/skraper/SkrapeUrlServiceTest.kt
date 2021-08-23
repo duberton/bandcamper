@@ -38,7 +38,7 @@ class SkrapeUrlServiceTest {
     }
 
     @Test
-    fun `given an url of an album that wil be released that needs to be scraped and parsed, when i do it, then it should be successful`() {
+    fun `given an url of an album that will be released, when i do it, then it should be successful`() {
         val email = "email@gmail.com"
         val album = Album(url = "http://url.com")
         val content = this.javaClass.classLoader.getResource("skrape-url-content-releases.html")?.readText()
@@ -53,7 +53,6 @@ class SkrapeUrlServiceTest {
 
         verify { restClientPort.get(any()) }
     }
-
 
     @Test
     fun `given an invalid url that returns no body, when i do it, then the response should he handled gracefully`() {

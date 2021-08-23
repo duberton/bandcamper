@@ -3,8 +3,8 @@ package com.duberton.application.usecase.input
 import com.duberton.application.port.output.AlbumRepositoryPort
 import io.mockk.mockk
 import io.mockk.verify
-import java.time.LocalDateTime
 import org.junit.Test
+import java.time.LocalDateTime
 
 class FindAllAlbumsUseCaseTest {
 
@@ -18,6 +18,6 @@ class FindAllAlbumsUseCaseTest {
 
         findAllAlbumsUseCase.execute(email, LocalDateTime.now().toString(), 10)
 
-        verify { albumRepositoryPort.findByEmail(email) }
+        verify { albumRepositoryPort.findByEmailWithCursor(email, any(), any()) }
     }
 }

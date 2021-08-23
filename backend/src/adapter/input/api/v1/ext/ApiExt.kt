@@ -29,7 +29,6 @@ fun Album.toResponse() = SingleResourceResponse(
     )
 )
 
-
 fun UserInfoRequest.toDomain() = User(
     googleId = id,
     fullName = name,

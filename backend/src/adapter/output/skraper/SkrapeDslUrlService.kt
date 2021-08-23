@@ -26,7 +26,9 @@ class SkrapeDslUrlService : ScrapeUrlPort {
                 url = album.url
             }
             extractIt<Album> {
-                if (responseStatus.code != 200) throw BusinessException("Request for ${album.url} returned an empty body")
+                if (responseStatus.code != 200) {
+                    throw BusinessException("Request for ${album.url} returned an empty body")
+                }
                 htmlDocument {
                     it.isReleased = div {
                         withClass = "tralbumData".and("tralbum-credits")

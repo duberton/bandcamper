@@ -7,12 +7,12 @@ import com.github.tomakehurst.wiremock.client.WireMock.okXml
 import com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
 import it.skrape.core.htmlDocument
+import org.junit.BeforeClass
+import org.junit.Test
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 import kotlin.test.assertEquals
-import org.junit.BeforeClass
-import org.junit.Test
 
 class SkrapeDslUrlServiceItTest {
 
@@ -28,7 +28,6 @@ class SkrapeDslUrlServiceItTest {
             wireMockServer.start()
         }
     }
-
 
     @Test
     fun `given an url from an album that has already been released, when i fetch it, then it should pass`() {
@@ -68,7 +67,6 @@ val futureReleaseDate: String =
     LocalDate.now().plusDays(2).format(DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH))
 val pastReleaseDate: String =
     LocalDate.now().minusDays(2).format(DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH))
-
 
 val futureReleaseDocument by lazy {
     htmlDocument(
