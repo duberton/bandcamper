@@ -2,6 +2,7 @@ package com.duberton.adapter.output.mongo.ext
 
 import com.duberton.application.domain.Album
 import com.duberton.application.domain.User
+import org.bson.Document
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
