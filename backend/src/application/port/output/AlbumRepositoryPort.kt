@@ -8,5 +8,7 @@ interface AlbumRepositoryPort {
 
     fun findByEmail(email: String): List<Album>
 
+    fun findByEmailWithCursor(email: String, cursor: String?, limit: Int): List<Album>
+
     fun findByReleaseDate(releaseDate: String): List<Album>
 }

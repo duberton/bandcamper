@@ -38,9 +38,11 @@ fun Routing.albums() {
             }
             get {
                 val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
+                val cursor = call.request.queryParameters["cursor"]
+                val limit = call.request.queryParameters["limit"]?.toInt() ?: 10
                 logger.info("Starting to find all the albums that belongs to {}", email)
                 email?.let {
-                    val albums = findAllAlbumsPort.execute(email)
+                    val albums = findAllAlbumsPort.execute(email, cursor, limit)
                     call.respond(HttpStatusCode.OK, albums.map { it.toResponse() })
                     logger.info("Done responding to the find all the albums call")
                 } ?: call.respond(HttpStatusCode.NotFound)

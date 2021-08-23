@@ -4,5 +4,5 @@ import com.duberton.application.domain.Album
 
 interface FindAllAlbumsPort {
 
-    fun execute(email: String): List<Album>
+    fun execute(email: String, cursor: String?, limit: Int): List<Album>
 }

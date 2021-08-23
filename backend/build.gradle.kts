@@ -6,7 +6,7 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val skrapeit_version: String by project
 val koin_version: String by project
-val mongo_version: String by project
+val kmongo_version: String by project
 val kotlix_serialization_version: String by project
 val redisson_version: String by project
 val quartz_version: String by project
@@ -72,7 +72,10 @@ dependencies {
     implementation("it.skrape:skrapeit-http-fetcher:$skrapeit_version")
     implementation("it.skrape:skrapeit-html-parser:$skrapeit_version")
     implementation("org.redisson:redisson:$redisson_version")
-    implementation("org.mongodb:mongo-java-driver:$mongo_version")
+    implementation("org.litote.kmongo:kmongo:$kmongo_version")
+    implementation("org.litote.kmongo:kmongo-async:$kmongo_version")
+    implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
+    implementation("org.litote.kmongo:kmongo-id:$kmongo_version")
     implementation("software.amazon.awssdk:ses:2.17.4")
     implementation("org.quartz-scheduler:quartz:$quartz_version")
     implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")

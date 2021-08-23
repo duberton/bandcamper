@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Media, Container, Table } from "reactstrap";
+import { Card, CardTitle, Container, Table } from "reactstrap";
 import { connect } from "react-redux";
 import ky from 'ky';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -30,31 +30,35 @@ function Content(props) {
     <main>
       <Container fluid style={{ marginTop: 100 }}>
         <Container>
-          <Table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Release date</th>
-                <th>Alerts</th>
-                <th>Creation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {albums.map((album, index) => {
-                return <tr key={index}>
-                  <td><img src={album.albumCoverUrl} alt={album.title} style={{ width: 60, height: 60 }} /></td>
-                  <td>{album.artist}</td>
-                  <td>{album.title}</td>
-                  <td><ReactTimeAgo date={album.releaseDate} /></td>
-                  {/* <td>{album.isReleased == false ? 'yes' : 'no'}</td> */}
-                  <td><FontAwesomeIcon icon={faEnvelope} /></td>
-                  <td><ReactTimeAgo date={album.createdAt} /></td>
+          <Card style={{ borderRadius: 10, borderColor: '#00000020' }}>
+            <CardTitle style={{ textAlign: 'left', marginLeft: 20, marginTop: 14, fontSize: 20 }}>Albums</CardTitle>
+            <Table style={{ fontSize: 15 }}>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Artwork</th>
+                  <th>Artist</th>
+                  <th>Album</th>
+                  <th>Release date</th>
+                  <th>Alerts</th>
+                  <th>Creation</th>
                 </tr>
-              })}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {albums.map((album, index) => {
+                  return <tr key={index} >
+                    <td style={{ verticalAlign: 'middle' }}>{index + 1}</td>
+                    <td style={{ verticalAlign: 'middle'}}><img src={album.albumCoverUrl} alt={album.title} style={{ width: 60, height: 60 }} /></td>
+                    <td style={{ verticalAlign: 'middle'}}>{album.artist}</td>
+                    <td style={{ verticalAlign: 'middle'}}>{album.title}</td>
+                    <td style={{ verticalAlign: 'middle'}}><ReactTimeAgo date={album.releaseDate} /></td>
+                    <td style={{ verticalAlign: 'middle'}}><FontAwesomeIcon icon={faEnvelope} /></td>
+                    <td style={{ verticalAlign: 'middle'}}><ReactTimeAgo date={album.createdAt} /></td>
+                  </tr>
+                })}
+              </tbody>
+            </Table>
+          </Card>
         </Container>
       </Container>
     </main>

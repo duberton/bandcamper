@@ -2,8 +2,10 @@ package com.duberton.application.domain
 
 import java.time.LocalDate
 import java.time.LocalDateTime
+import org.bson.codecs.pojo.annotations.BsonId
 
 data class Album(
+    @BsonId
     val id: String? = null,
     val url: String = "",
     var artist: String? = null,
