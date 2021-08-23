@@ -28,11 +28,11 @@ function AuthenticatedDropdown(props) {
   });
 
   return (
-    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-      <DropdownToggle caret>
+    <Dropdown isOpen={dropdownOpen} toggle={toggle} >
+      <DropdownToggle caret className="bg-white" style={{ color: 'black', fontSize: 14 }}>
         {props.user.name}
       </DropdownToggle>
-      <DropdownMenu style={{ borderRadius: 6 }}>
+      <DropdownMenu style={{ borderRadius: 6 }} >
         <DropdownItem header><strong>{props.user.email}</strong></DropdownItem>
         <DropdownItem>{props.user.name}</DropdownItem>
         <DropdownItem>Account</DropdownItem>

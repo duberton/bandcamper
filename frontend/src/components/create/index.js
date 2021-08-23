@@ -18,7 +18,7 @@ function CreateAlbum(props) {
       },
       body: JSON.stringify({ "url": url })
     }).json();
-    console.log(response)
+    setUrl('');
   }
 
   const handleInputChange = event => {
@@ -33,7 +33,8 @@ function CreateAlbum(props) {
           <Form onSubmit={createAlbum}>
             <FormGroup>
               <Label for="url">Bandcamp album URL</Label>
-              <Input type="text" name="url" id="url" placeholder="url for the album" onChange={handleInputChange} />
+              <Input type="text" name="url" id="url" placeholder="https://artist.bandcamp.com" value={url}
+                onChange={handleInputChange} required  />
             </FormGroup>
             <Button>Submit</Button>
           </Form>

@@ -1,11 +1,16 @@
-import { Provider } from 'react-redux';
 import './App.css';
+import Home from './components/home';
+import Create from './components/create';
+import Header from './components/common/Header';
+import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store'
-import Content from './components/home/Content';
-import Header from './components/home/Header';
 import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom/cjs/react-router-dom.min';
-import CreateAlbum from './components/CreateAlbum';
+import TimeAgo from 'javascript-time-ago'
+
+import en from 'javascript-time-ago/locale/en'
+
+TimeAgo.addDefaultLocale(en)
 
 function App() {
   return (
@@ -14,11 +19,11 @@ function App() {
         <BrowserRouter>
           <div className="App">
             <Header />
+            <Switch>
+              <Route path="/create" component={Create}></Route>
+              <Route path="/" component={Home}></Route>
+            </Switch>
           </div>
-          <Switch>
-            <Route path="/create" component={CreateAlbum}></Route>
-            <Route path="/" component={Content}></Route>
-          </Switch>
         </BrowserRouter>
       </PersistGate>
     </Provider>

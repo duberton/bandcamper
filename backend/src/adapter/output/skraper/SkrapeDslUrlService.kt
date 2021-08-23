@@ -56,8 +56,8 @@ class SkrapeDslUrlService : ScrapeUrlPort {
                             val date = Regex(RELEASE_DATE_REGEX).find(text)?.groups?.first()?.value
                             LocalDate.parse(
                                 date?.replace(RELEASED_OR_RELEASED_REGEX.toRegex(), "")?.trim(),
-                                DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.ENGLISH)
-                            ).toString()
+                                DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
+                            )
                         }
                     }
                 }

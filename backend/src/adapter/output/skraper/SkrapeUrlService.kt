@@ -42,7 +42,7 @@ class SkrapeUrlService(private val restClientPort: RestClientPort) : ScrapeUrlPo
             album.copy(
                 artist = artist,
                 title = albumTitle,
-                releaseDate = parsedReleaseDate.toString(),
+                releaseDate = parsedReleaseDate,
                 email = email,
                 albumCoverUrl = albumCoverUrl,
                 createdAt = LocalDateTime.now()

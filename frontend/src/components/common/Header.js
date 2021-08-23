@@ -4,6 +4,8 @@ import { authSuccess, authInProgress, authFailure, logoutSuccess } from "../../r
 import AuthenticatedDropdown from "./AuthenticatedDropdown";
 import { connect } from "react-redux";
 import ky from 'ky';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaravan } from '@fortawesome/free-solid-svg-icons'
 
 function Header(props) {
 
@@ -35,22 +37,24 @@ function Header(props) {
                 dark
                 className="bg-dark">
                 <Nav>
-                  <NavbarBrand href="/">bandcamper</NavbarBrand>
+                  <NavbarBrand href="/" ><FontAwesomeIcon icon={faCaravan} size='1x' /> <span style={{ marginLeft: 10 }}>bandcamper</span></NavbarBrand>
                   <NavItem>
-                    <NavLink href="/create">Create</NavLink>
+                    <NavLink style={{ color: 'white', marginLeft: 30, fontSize: 16 }} href="/create">Create</NavLink>
                   </NavItem>
                 </Nav>
               </Navbar>
             </Col>
             <Col sm="3" md="3" lg="3">
               <Navbar>
-                {isAuthenticated ?
-                  <AuthenticatedDropdown /> : <GoogleLogin
-                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                    buttonText="Sign in with Google"
-                    onSuccess={loginSuccess}
-                    onFailure={loginFailure} />
-                }
+                <Nav className="ml-auto">
+                  {isAuthenticated ?
+                    <AuthenticatedDropdown /> : <GoogleLogin
+                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                      buttonText="Sign in with Google"
+                      onSuccess={loginSuccess}
+                      onFailure={loginFailure} />
+                  }
+                </Nav>
               </Navbar>
             </Col>
           </Row>
