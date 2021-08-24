@@ -45,7 +45,7 @@ fun Routing.albums() {
                 logger.info("Starting to find all the albums that belongs to {}", email)
                 email?.let {
                     val albums = findAllAlbumsPort.execute(email, previous, next, limit)
-                    val albumsResponse = albums.toManyResponse()
+                    val albumsResponse = albums.toManyResponse(next, limit)
                     call.respond(HttpStatusCode.OK, albumsResponse)
                     logger.info("Done responding to the find all the albums call")
                 } ?: call.respond(HttpStatusCode.NotFound)
