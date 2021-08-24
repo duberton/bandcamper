@@ -16,8 +16,8 @@ class FindAllAlbumsUseCaseTest {
     fun `given an email, when i try to find all albums that belongs to it, then it should properly do it`() {
         val email = "email"
 
-        findAllAlbumsUseCase.execute(email, LocalDateTime.now().toString(), 10)
+        findAllAlbumsUseCase.execute(email, LocalDateTime.now().toString(), LocalDateTime.now().toString(), 10)
 
-        verify { albumRepositoryPort.findByEmailWithCursor(email, any(), any()) }
+        verify { albumRepositoryPort.findByEmailWithCursor(email, any(), any(), any()) }
     }
 }

@@ -8,11 +8,11 @@ import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
 import org.bson.Document
 import org.litote.kmongo.aggregate
-import org.litote.kmongo.and
 import org.litote.kmongo.ascending
 import org.litote.kmongo.eq
 import org.litote.kmongo.gte
 import org.litote.kmongo.limit
+import org.litote.kmongo.lte
 import org.litote.kmongo.match
 import org.litote.kmongo.sort
 import java.time.LocalDateTime
@@ -27,16 +27,13 @@ class AlbumRepository(private val mongoCollection: MongoCollection<Document>) : 
         return mongoCollection.find(eq(Album::email eq email)).map { it.toAlbumDomain() }.toList()
     }
 
-    override fun findByEmailWithCursor(email: String, cursor: String?, limit: Int): List<Album> {
+    override fun findByEmailWithCursor(email: String, previous: String?, next: String?, limit: Int): List<Album> {
         return mongoCollection.aggregate<Album>(
-            match(
-                cursor?.let {
-                    and(
-                        Album::email eq email,
-                        Album::createdAt gte LocalDateTime.parse(cursor)
-                    )
-                } ?: (Album::email eq email)
-            ),
+            *listOfNotNull(
+                previous?.let { match(Album::createdAt lte LocalDateTime.parse(previous)) },
+                next?.let { match(Album::createdAt gte LocalDateTime.parse(next)) }
+            ).toTypedArray(),
+            match(Album::email eq email),
             limit(limit),
             sort(ascending(Album::createdAt))
         ).toList()

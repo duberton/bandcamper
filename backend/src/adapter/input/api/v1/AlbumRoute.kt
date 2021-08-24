@@ -1,7 +1,8 @@
 package com.duberton.adapter.input.api.v1
 
 import com.duberton.adapter.input.api.v1.ext.toDomain
-import com.duberton.adapter.input.api.v1.ext.toResponse
+import com.duberton.adapter.input.api.v1.ext.toManyResponse
+import com.duberton.adapter.input.api.v1.ext.toSingleResponse
 import com.duberton.adapter.input.api.v1.request.AlbumRequest
 import com.duberton.application.port.input.FindAllAlbumsPort
 import com.duberton.application.port.input.ScrapeAlbumPagePort
@@ -33,17 +34,19 @@ fun Routing.albums() {
                 logger.info("Starting to process the creation of an album for the following url {}", albumRequest.url)
                 val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
                 val scrapedAlbum = scrapeAlbumPagePort.execute(albumRequest.toDomain(), email)
-                call.respond(HttpStatusCode.Created, scrapedAlbum.toResponse())
+                call.respond(HttpStatusCode.Created, scrapedAlbum.toSingleResponse())
                 logger.info("Done processing the creation of the following album url {}", albumRequest.url)
             }
             get {
                 val email = call.principal<JWTPrincipal>()?.payload?.getClaim("email")?.asString()
-                val cursor = call.request.queryParameters["cursor"]
+                val previous = call.request.queryParameters["previous"]
+                val next = call.request.queryParameters["next"]
                 val limit = call.request.queryParameters["limit"]?.toInt() ?: 10
                 logger.info("Starting to find all the albums that belongs to {}", email)
                 email?.let {
-                    val albums = findAllAlbumsPort.execute(email, cursor, limit)
-                    call.respond(HttpStatusCode.OK, albums.map { it.toResponse() })
+                    val albums = findAllAlbumsPort.execute(email, previous, next, limit)
+                    val albumsResponse = albums.toManyResponse()
+                    call.respond(HttpStatusCode.OK, albumsResponse)
                     logger.info("Done responding to the find all the albums call")
                 } ?: call.respond(HttpStatusCode.NotFound)
             }
