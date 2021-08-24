@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardTitle, Container, Table } from "reactstrap";
 import { connect } from "react-redux";
-import ky from 'ky';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import ReactTimeAgo from 'react-time-ago'
@@ -10,16 +10,19 @@ import ReactTimeAgo from 'react-time-ago'
 function Content(props) {
 
   const [albums, setAlbums] = useState([]);
+  const [cursors, setCursors] = useState({});
 
   async function fetchAlbums() {
     const apiUrl = process.env.REACT_APP_BANDCAMPER_API_URL
-    const response = await ky.get(`${apiUrl}/v1/album`, {
+    const { data } = await axios.get(`${apiUrl}/v1/album`, {
+      params: { previous: cursors.previous, next: cursors.next },
       headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${props.accessToken}`
       }
-    }).json();
-    setAlbums(response);
+    });
+    setAlbums(data.data);
+    setCursors(data.cursors);
   }
 
   useEffect(() => {
@@ -45,18 +48,25 @@ function Content(props) {
                 </tr>
               </thead>
               <tbody>
-                {albums.map((album, index) => {
+                {albums.map((resource, index) => {
+                  const attributes = resource.attributes;
                   return <tr key={index} >
                     <td style={{ verticalAlign: 'middle' }}>{index + 1}</td>
-                    <td style={{ verticalAlign: 'middle'}}><img src={album.albumCoverUrl} alt={album.title} style={{ width: 60, height: 60 }} /></td>
-                    <td style={{ verticalAlign: 'middle'}}>{album.artist}</td>
-                    <td style={{ verticalAlign: 'middle'}}>{album.title}</td>
-                    <td style={{ verticalAlign: 'middle'}}><ReactTimeAgo date={album.releaseDate} /></td>
-                    <td style={{ verticalAlign: 'middle'}}><FontAwesomeIcon icon={faEnvelope} /></td>
-                    <td style={{ verticalAlign: 'middle'}}><ReactTimeAgo date={album.createdAt} /></td>
+                    <td style={{ verticalAlign: 'middle' }}><img src={attributes.albumCoverUrl} alt={attributes.title} style={{ width: 60, height: 60 }} /></td>
+                    <td style={{ verticalAlign: 'middle' }}>{attributes.artist}</td>
+                    <td style={{ verticalAlign: 'middle' }}>{attributes.title}</td>
+                    <td style={{ verticalAlign: 'middle' }}><ReactTimeAgo date={attributes.releaseDate} /></td>
+                    <td style={{ verticalAlign: 'middle' }}><FontAwesomeIcon icon={faEnvelope} /></td>
+                    <td style={{ verticalAlign: 'middle' }}><ReactTimeAgo date={attributes.createdAt} /></td>
                   </tr>
                 })}
               </tbody>
+              <tfoot>
+                <tr>
+                  <td>Previous</td>
+                  <td onClick={fetchAlbums}>Next</td>
+                </tr>
+              </tfoot>
             </Table>
           </Card>
         </Container>
