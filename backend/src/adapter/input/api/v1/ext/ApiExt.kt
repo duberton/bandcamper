@@ -31,7 +31,7 @@ fun Album.toSingleResponse() = SingleResourceResponse(
 fun List<Album>.toManyResponse(previous: String?, limit: Int) = ManyResourcesResponse(
     data = if (size > limit) dropLast(1).map { it.toResponse() } else map { it.toResponse() },
     cursors = ManyResourcesResponse.Cursors(
-        previous = previous ?: firstOrNull()?.createdAt?.toString(),
+        previous = if (size > limit) firstOrNull()?.createdAt?.toString() else null,
         next = if (size > limit) dropLast(1).lastOrNull()?.createdAt?.toString() else null
     )
 )

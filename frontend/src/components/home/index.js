@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, CardTitle, Container, Table } from "reactstrap";
+import { Card, Row, CardTitle, Col, Container, Table } from "reactstrap";
 import { connect } from "react-redux";
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -7,15 +7,16 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import ReactTimeAgo from 'react-time-ago'
 
 
-function Content(props) {
+function Home(props) {
 
   const [albums, setAlbums] = useState([]);
   const [cursors, setCursors] = useState({});
 
-  async function fetchAlbums() {
+  async function fetchAlbums(cursor) {
+    const params = { ...cursor, limit: 1 };
     const apiUrl = process.env.REACT_APP_BANDCAMPER_API_URL
     const { data } = await axios.get(`${apiUrl}/v1/album`, {
-      params: { previous: cursors.previous, next: cursors.next },
+      params,
       headers: {
         'Accept': 'application/json',
         'Authorization': `Bearer ${props.accessToken}`
@@ -61,13 +62,13 @@ function Content(props) {
                   </tr>
                 })}
               </tbody>
-              <tfoot>
-                <tr>
-                  <td>Previous</td>
-                  <td onClick={fetchAlbums}>Next</td>
-                </tr>
-              </tfoot>
             </Table>
+            <Container>
+              <Row style={{ marginBottom: 20 }}>
+                <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => fetchAlbums({ previous: cursors.previous })}>Previous</Col>
+                <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => fetchAlbums({ next: cursors.next })}>Next</Col>
+              </Row>
+            </Container>
           </Card>
         </Container>
       </Container>
@@ -82,4 +83,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Content);
+export default connect(mapStateToProps)(Home);
