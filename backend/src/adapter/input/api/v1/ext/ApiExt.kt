@@ -28,11 +28,32 @@ fun Album.toSingleResponse() = SingleResourceResponse(
     )
 )
 
-fun List<Album>.toManyResponse(previous: String?, limit: Int) = ManyResourcesResponse(
-    data = if (size > limit) dropLast(1).map { it.toResponse() } else map { it.toResponse() },
+fun List<Album>.toManyResponse(previous: String?, next: String?, limit: Int) = ManyResourcesResponse(
+    data = when {
+        size > limit && previous == null -> dropLast(1).map { it.toResponse() }
+        size > limit && previous != null -> dropLast(1).reversed().map { it.toResponse() }
+        size == limit && previous == null -> map { it.toResponse() }
+        size == limit && previous != null -> reversed().map { it.toResponse() }
+        size < limit && previous == null -> map { it.toResponse() }
+        size < limit && previous != null -> reversed().map { it.toResponse() }
+        else -> map { it.toResponse() }
+    },
     cursors = ManyResourcesResponse.Cursors(
-        previous = if (size > limit) firstOrNull()?.createdAt?.toString() else null,
-        next = if (size > limit) dropLast(1).lastOrNull()?.createdAt?.toString() else null
+        previous = when {
+            size > limit && previous != null -> dropLast(1).reversed().firstOrNull()?.createdAt?.toString()
+            size > limit && next != null -> dropLast(1).firstOrNull()?.createdAt?.toString()
+            previous == null && next == null -> null
+            size == limit && previous != null -> null
+            else -> firstOrNull()?.createdAt?.toString()
+        },
+        next = when {
+            size > limit -> dropLast(1).lastOrNull()?.createdAt?.toString()
+            size == limit && previous != null -> reversed().lastOrNull()?.createdAt?.toString()
+            size == limit && next != null -> null
+            size < limit && next != null -> null
+            size == limit && next == null -> null
+            else -> lastOrNull()?.createdAt?.toString()
+        }
     )
 )
 

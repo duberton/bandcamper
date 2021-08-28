@@ -1,9 +1,11 @@
-package com.duberton.application.domain
+package com.duberton.adapter.output.mongo.entity
 
 import java.time.LocalDate
 import java.time.LocalDateTime
+import org.bson.codecs.pojo.annotations.BsonId
 
-data class Album(
+data class AlbumEntity(
+    @BsonId
     val id: String? = null,
     val url: String = "",
     var artist: String? = null,

@@ -1,5 +1,6 @@
 package com.duberton.adapter.output.mongo
 
+import com.duberton.adapter.output.mongo.entity.AlbumEntity
 import com.duberton.adapter.output.mongo.ext.toAlbumDomain
 import com.duberton.adapter.output.mongo.ext.toDocument
 import com.duberton.application.domain.Album
@@ -10,6 +11,7 @@ import java.time.LocalDateTime
 import org.bson.Document
 import org.litote.kmongo.aggregate
 import org.litote.kmongo.ascending
+import org.litote.kmongo.descending
 import org.litote.kmongo.eq
 import org.litote.kmongo.gt
 import org.litote.kmongo.limit
@@ -29,13 +31,16 @@ class AlbumRepository(private val mongoCollection: MongoCollection<Document>) : 
 
     override fun findByEmailWithCursor(email: String, previous: String?, next: String?, limit: Int): List<Album> {
         return mongoCollection.aggregate<Album>(
-            *listOfNotNull(
-                previous?.let { match(Album::createdAt lt LocalDateTime.parse(previous)) },
-                next?.let { match(Album::createdAt gt LocalDateTime.parse(next)) }
-            ).toTypedArray(),
             match(Album::email eq email),
+            *listOfNotNull(
+                previous?.let { match(AlbumEntity::createdAt lt LocalDateTime.parse(previous)) },
+                next?.let { match(AlbumEntity::createdAt gt LocalDateTime.parse(next)) }
+            ).toTypedArray(),
+            when {
+                previous != null -> sort(descending(AlbumEntity::createdAt))
+                else -> sort(ascending(AlbumEntity::createdAt))
+            },
             limit(limit + 1),
-            sort(ascending(Album::createdAt))
         ).toList()
     }
 

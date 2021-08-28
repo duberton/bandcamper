@@ -13,7 +13,7 @@ function Home(props) {
   const [cursors, setCursors] = useState({});
 
   async function fetchAlbums(cursor) {
-    const params = { ...cursor, limit: 1 };
+    const params = { ...cursor, limit: 5 };
     const apiUrl = process.env.REACT_APP_BANDCAMPER_API_URL
     const { data } = await axios.get(`${apiUrl}/v1/album`, {
       params,
@@ -65,8 +65,13 @@ function Home(props) {
             </Table>
             <Container>
               <Row style={{ marginBottom: 20 }}>
-                <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => fetchAlbums({ previous: cursors.previous })}>Previous</Col>
-                <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => fetchAlbums({ next: cursors.next })}>Next</Col>
+                <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => {
+                  if (cursors.previous) fetchAlbums({ previous: cursors.previous })
+                }}
+                >Previous</Col>
+                <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => {
+                  if (cursors.next) fetchAlbums({ next: cursors.next })
+                }}>Next</Col>
               </Row>
             </Container>
           </Card>
