@@ -34,7 +34,7 @@ function CreateAlbum(props) {
             <FormGroup>
               <Label for="url">Bandcamp album URL</Label>
               <Input type="text" name="url" id="url" placeholder="https://artist.bandcamp.com" value={url}
-                onChange={handleInputChange} required  />
+                onChange={handleInputChange} required pattern="(http|https):\/\/([a-zA-Z0-9]+.bandcamp.com)\/?.?" />
             </FormGroup>
             <Button>Submit</Button>
           </Form>

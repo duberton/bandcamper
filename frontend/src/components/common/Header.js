@@ -37,23 +37,28 @@ function Header(props) {
                 dark
                 className="bg-dark">
                 <Nav>
-                  <NavbarBrand href="/" ><FontAwesomeIcon icon={faCaravan} size='1x' /> <span style={{ marginLeft: 10 }}>bandcamper</span></NavbarBrand>
-                  <NavItem>
-                    <NavLink style={{ color: 'white', marginLeft: 30, fontSize: 16 }} href="/create">Create</NavLink>
+                  <NavbarBrand href="/" ><FontAwesomeIcon icon={faCaravan} size='2x' /></NavbarBrand>
+                  <NavItem className="m-auto">
+                    <NavLink style={{ color: 'white' }} href="/">bandcamper</NavLink>
+                  </NavItem>
+                  <NavItem className="m-auto">
+                    <NavLink style={{ color: 'white', marginLeft: 20, fontSize: 16 }} href="/create">create</NavLink>
                   </NavItem>
                 </Nav>
               </Navbar>
             </Col>
-            <Col sm="3" md="3" lg="3">
-              <Navbar>
-                <Nav className="ml-auto">
-                  {isAuthenticated ?
-                    <AuthenticatedDropdown /> : <GoogleLogin
-                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                      buttonText="Sign in with Google"
-                      onSuccess={loginSuccess}
-                      onFailure={loginFailure} />
-                  }
+            <Col sm="3" md="3" lg="3" className="m-auto">
+              <Navbar style={{ justifyContent: 'flex-end' }}>
+                <Nav>
+                  <NavItem>
+                    {isAuthenticated ?
+                      <AuthenticatedDropdown /> : <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                        buttonText="Sign in with Google"
+                        onSuccess={loginSuccess}
+                        onFailure={loginFailure} />
+                    }
+                  </NavItem>
                 </Nav>
               </Navbar>
             </Col>
