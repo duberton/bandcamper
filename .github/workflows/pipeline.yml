@@ -99,6 +99,15 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper:${{ github.sha }}
           push: true
 
+      - name: AWS ECR login
+        run: |
+          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.AWS_ECR_REPOSITORY }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      
+
   rollout:
     name: Rollout
     runs-on: ubuntu-latest
