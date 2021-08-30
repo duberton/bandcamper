@@ -101,10 +101,19 @@ jobs:
 
       - name: AWS ECR login
         run: |
-          aws ecr get-login-password --region ${{ env.AWS_REGION }} | docker login --username AWS --password-stdin ${{ env.AWS_ECR_REPOSITORY }}
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ECR_REPOSITORY }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: 'Build Docker image'
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_SERVICE }}/${{ github.sha }} .
+
+      - name: 'Push image to AWS ECR'
+        run: |
+          docker tag ${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }} ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }}
+          docker push ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }}
 
       
 
