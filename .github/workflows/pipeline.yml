@@ -106,11 +106,11 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: 'Build Docker image'
+      - name: 'Builds the Docker image'
         run: |
           docker build -t ${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }} .
 
-      - name: 'Push image to AWS ECR'
+      - name: 'Pushes the image to ECR'
         run: |
           docker tag ${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }} ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }}
           docker push ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }}
