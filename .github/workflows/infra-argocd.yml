@@ -1,0 +1,27 @@
+name: ArgoCD pipeline
+
+on:
+  push:
+    branches:
+      - 'argocd/**'
+
+jobs:
+  install-app:
+    name: Deploy ArgoCd resources
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fetch sources
+        uses: actions/checkout@v2
+
+      - name: HashiCorp - Setup Terraform
+        uses: hashicorp/setup-terraform@v1.2.1
+
+      - name: Move workdir to ArgoCD hcl files
+        run: cd infrastructure/tf/argocd
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Terraform apply
+        run: terraform apply -auto-approve

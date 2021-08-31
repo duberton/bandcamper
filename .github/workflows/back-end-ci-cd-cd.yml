@@ -1,12 +1,15 @@
-name: Continuous integration/delivery/deployment
+name: Back-end CI/CD/CD
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
-
+    branches:
+      - main
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   build:
