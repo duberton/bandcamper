@@ -23,10 +23,14 @@ resource "argocd_application" "helm" {
     }
   }
 
-  wait = true
-
   spec {
     project = "default"
+
+    sync_policy {
+      automated = {
+        allow_empty = true
+      }
+    }
 
     source {
       repo_url = "https://github.com/duberton/bandcamper"
