@@ -27,7 +27,7 @@ jobs:
         uses: isbang/setup-awscli@v0.1.0
 
       - name: AWS EKS kube config
-        run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.AWS_EKS_CLUSTER_NAME }}}
+        run: aws eks --region ${{ secrets.AWS_REGION }} update-kubeconfig --name ${{ secrets.AWS_EKS_CLUSTER_NAME }}
       
       - name: Creating ArgoCD namespace
         run: kubectl create namespace argocd
