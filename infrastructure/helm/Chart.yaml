@@ -18,4 +18,4 @@ version: 0.1.0
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
-appVersion: "fdbae7885d9434c39e56420b699494faade5095a"
+appVersion: "f88558f378d06ce556f778b9a4f405cba001532d"
