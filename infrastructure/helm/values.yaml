@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: duberton/bandcamper
+  repository: 580091747335.dkr.ecr.sa-east-1.amazonaws.com/bandcamper
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
