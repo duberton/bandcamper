@@ -1,5 +1,5 @@
 variable "server_address" {
-  default = "localhost:8080"
+  default = "url"
   type    = string
 }
 

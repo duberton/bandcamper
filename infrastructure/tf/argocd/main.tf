@@ -2,7 +2,7 @@ terraform {
   required_providers {
     argocd = {
       source  = "oboukili/argocd"
-      version = "1.2.2"
+      version = "2.2.0"
     }
   }
 }
@@ -33,7 +33,7 @@ resource "argocd_application" "helm" {
     }
 
     source {
-      repo_url = "https://github.com/duberton/bandcamper"
+      repo_url = "git@github.com:duberton/bandcamper.git"
       path     = "infrastructure/helm"
       helm {
         value_files = ["values.yaml"]
@@ -41,7 +41,7 @@ resource "argocd_application" "helm" {
     }
 
     destination {
-      server    = "https://kubernetes.default.svc"
+      server    = var.server_address
       namespace = "default"
     }
   }
