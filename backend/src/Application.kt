@@ -145,7 +145,7 @@ fun Application.module(testing: Boolean = false) {
         metricsRoute()
     }
 
-    val isTesting = appConfig.property("ktor.testing").getString()
+    val isTesting = appConfig.property("ktor.testing").getString().toBoolean()
 
-    if (isTesting == "false") JobScheduler.start(appConfig)
+    if (!isTesting) JobScheduler.start(appConfig)
 }

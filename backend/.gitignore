@@ -8,3 +8,4 @@
 .env
 .googleCredentials
 .awsCredentials
+*log

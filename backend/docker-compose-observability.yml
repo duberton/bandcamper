@@ -1,0 +1,44 @@
+version: '3.5'
+
+services:
+  prometheus:
+    hostname: prometheus
+    image: prom/prometheus:v2.29.1
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./infrastructure/prometheus:/etc/prometheus
+    networks:
+      - observability
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    volumes:
+      - './infrastructure/grafana:/etc/grafana/provisioning'
+      - './infrastructure/grafana/dashboards/prometheus/:/var/lib/grafana/dashboards'
+    networks:
+      - observability
+  loki:
+    image: grafana/loki:2.4.1
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - observability
+
+  promtail:
+    image: grafana/promtail:2.4.1
+    volumes:
+      - /var/log:/var/log
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - observability
+
+
+networks:
+  observability:
+    name: observability
+    driver: bridge

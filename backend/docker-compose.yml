@@ -32,29 +32,43 @@ services:
       - bandcamper
   prometheus:
     hostname: prometheus
-    image: prom/prometheus:v2.29.1
+    image: prom/prometheus:latest
     ports:
       - "9090:9090"
     volumes:
       - ./infrastructure/prometheus:/etc/prometheus
     networks:
-      - observability
+      - bandcamper
     extra_hosts:
       - "host.docker.internal:host-gateway"
   grafana:
-    image: grafana/grafana:5.1.0
+    image: grafana/grafana:latest
     ports:
       - "3001:3000"
     volumes:
       - './infrastructure/grafana:/etc/grafana/provisioning'
       - './infrastructure/grafana/dashboards/prometheus/:/var/lib/grafana/dashboards'
     networks:
-      - observability
+      - bandcamper
+  loki:
+    image: grafana/loki:2.4.1
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - bandcamper
+
+  promtail:
+    image: grafana/promtail:2.4.1
+    volumes:
+      - /var/log:/var/log
+      - /home/duberton/repositories/personal/bandcamper/backend:/var/bandcamper
+      - /home/duberton/repositories/personal/bandcamper/backend/infrastructure/promtail:/etc/bandcamper/config
+    command: -config.file=/etc/bandcamper/config/config.yml
+    networks:
+      - bandcamper
 
 networks:
   bandcamper:
     name: bandcamper
-    driver: bridge
-  observability:
-    name: observability
     driver: bridge
