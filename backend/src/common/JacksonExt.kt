@@ -4,4 +4,4 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 
 fun <T> T.objectToJson(): String = jacksonObjectMapper().writeValueAsString(this)
 
-inline fun <reified T> String.jsonToObject(): T = jacksonObjectMapper().readValue(this, T::class.java)
+fun <T> String.jsonToObject(t: Class<T>): T = jacksonObjectMapper().readValue(this, t)
