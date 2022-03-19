@@ -11,5 +11,9 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+    - port: {{ .Values.service.portSsl }}
+      targetPort: http
+      protocol: TCP
+      name: https
   selector:
     {{- include "bandcamper.selectorLabels" . | nindent 4 }}
