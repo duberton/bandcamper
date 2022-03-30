@@ -22,7 +22,7 @@ services:
     ports:
       - "4566:4566"
     environment:
-      - SERVICES=ses
+      - SERVICES=ses,dynamodb
       - DEBUG=1
     volumes:
       - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"

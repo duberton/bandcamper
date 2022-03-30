@@ -17,6 +17,8 @@ val mockk_version: String by project
 val kotest_version: String by project
 val wiremock_version: String by project
 val prometheus_version: String by project
+val aws_version: String by project
+val jackson_version: String by project
 
 val nonLocalEnv: String? = System.getenv("DEV")
 
@@ -76,9 +78,11 @@ dependencies {
     implementation("org.litote.kmongo:kmongo-async:$kmongo_version")
     implementation("org.litote.kmongo:kmongo-coroutine:$kmongo_version")
     implementation("org.litote.kmongo:kmongo-id:$kmongo_version")
-    implementation("software.amazon.awssdk:ses:2.17.4")
+    implementation("software.amazon.awssdk:ses:$aws_version")
+    implementation("software.amazon.awssdk:dynamodb:$aws_version")
     implementation("org.quartz-scheduler:quartz:$quartz_version")
     implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version")
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
     testImplementation("org.jeasy:easy-random-core:$easy_random_version")

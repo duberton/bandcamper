@@ -10,6 +10,7 @@ import com.duberton.adapter.input.api.v1.jwt.Jwt
 import com.duberton.adapter.input.api.v1.metricsRoute
 import com.duberton.adapter.input.quartz.JobScheduler
 import com.duberton.adapter.input.quartz.config.quartzModule
+import com.duberton.adapter.output.aws.dynamodb.config.dynamoDBModule
 import com.duberton.adapter.output.aws.ses.config.sesModule
 import com.duberton.adapter.output.mongo.config.mongoModule
 import com.duberton.adapter.output.okhttp.config.okHttpModules
@@ -112,7 +113,8 @@ fun Application.module(testing: Boolean = false) {
                 mongoModule(appConfig),
                 redisModule(appConfig),
                 sesModule(appConfig),
-                quartzModule
+                quartzModule,
+                dynamoDBModule(appConfig)
             )
         )
     }

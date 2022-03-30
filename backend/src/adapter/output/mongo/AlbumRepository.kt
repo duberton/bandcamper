@@ -32,10 +32,8 @@ class AlbumRepository(private val mongoCollection: MongoCollection<Document>) : 
     override fun findByEmailWithCursor(email: String, previous: String?, next: String?, limit: Int): List<Album> {
         return mongoCollection.aggregate<Album>(
             match(Album::email eq email),
-            *listOfNotNull(
-                previous?.let { match(AlbumEntity::createdAt lt LocalDateTime.parse(previous)) },
-                next?.let { match(AlbumEntity::createdAt gt LocalDateTime.parse(next)) }
-            ).toTypedArray(),
+            *listOfNotNull(previous?.let { match(AlbumEntity::createdAt lt LocalDateTime.parse(previous)) },
+                next?.let { match(AlbumEntity::createdAt gt LocalDateTime.parse(next)) }).toTypedArray(),
             when {
                 previous != null -> sort(descending(AlbumEntity::createdAt))
                 else -> sort(ascending(AlbumEntity::createdAt))

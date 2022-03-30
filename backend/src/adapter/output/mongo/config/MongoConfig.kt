@@ -14,8 +14,8 @@ import org.litote.kmongo.KMongo
 
 fun mongoModule(applicationConfig: ApplicationConfig) = module {
     single { buildMongoClient(applicationConfig) }
-    single<AlbumRepositoryPort> { AlbumRepository(get(named("albumRepository"))) }
-    single(named("albumRepository")) { buildAlbumCollection(get()) }
+    single<AlbumRepositoryPort> { AlbumRepository(get(named(MONGO_ALBUM_REPO))) }
+    single(named(MONGO_ALBUM_REPO)) { buildAlbumCollection(get()) }
 }
 
 fun buildMongoClient(applicationConfig: ApplicationConfig): MongoClient {
@@ -30,3 +30,5 @@ fun buildMongoClient(applicationConfig: ApplicationConfig): MongoClient {
 
 fun buildAlbumCollection(mongoClient: MongoClient): MongoCollection<Document> =
     mongoClient.getDatabase("bandcamper").getCollection("album")
+
+const val MONGO_ALBUM_REPO = "mongoAlbumRepository"

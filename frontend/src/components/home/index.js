@@ -13,7 +13,7 @@ function Home(props) {
   const [cursors, setCursors] = useState({});
 
   async function fetchAlbums(cursor) {
-    const params = { ...cursor, limit: 5 };
+    const params = { ...cursor, limit: 1 };
     const apiUrl = process.env.REACT_APP_BANDCAMPER_API_URL
     const { data } = await axios.get(`${apiUrl}/v1/album`, {
       params,

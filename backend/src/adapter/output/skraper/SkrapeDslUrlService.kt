@@ -17,6 +17,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import java.util.UUID
 
 class SkrapeDslUrlService : ScrapeUrlPort {
 
@@ -63,7 +64,7 @@ class SkrapeDslUrlService : ScrapeUrlPort {
                         }
                     }
                 }
-            }.copy(url = album.url, createdAt = LocalDateTime.now(), email = email)
+            }.copy(id = UUID.randomUUID().toString(), url = album.url, createdAt = LocalDateTime.now(), email = email)
         }
     }
 }
