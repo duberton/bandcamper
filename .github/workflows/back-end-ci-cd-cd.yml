@@ -88,19 +88,19 @@ jobs:
         with:
           name: bandcamper
 
-      - name: Docker Hub login
-        uses: docker/login-action@v1 
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+      # - name: Docker Hub login
+      #   uses: docker/login-action@v1 
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Builds and pushes the docker image to docker hub
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper:${{ github.sha }}
-          push: true
+      # - name: Builds and pushes the docker image to docker hub
+      #   id: docker_build
+      #   uses: docker/build-push-action@v2
+      #   with:
+      #     context: .
+      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bandcamper:${{ github.sha }}
+      #     push: true
 
       - name: AWS ECR login
         run: |
