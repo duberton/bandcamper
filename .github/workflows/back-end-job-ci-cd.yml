@@ -1,16 +1,5 @@
 name: Back-end Job CI/CD/CD
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 1,15 * *'
-
 jobs:
   build:
     name: Build
@@ -82,3 +71,28 @@ jobs:
         run: |
           docker tag ${{ secrets.AWS_ECR_JOB_SERVICE }}:${{ github.sha }} ${{ secrets.AWS_ECR_JOB_REPOSITORY }}/${{ secrets.AWS_ECR_JOB_SERVICE }}:${{ github.sha }}
           docker push ${{ secrets.AWS_ECR_JOB_REPOSITORY }}/${{ secrets.AWS_ECR_JOB_SERVICE }}:${{ github.sha }}
+
+  rollout:
+    name: Rollout
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+      - name: Checking out sources
+        uses: actions/checkout@v2
+
+      - name: Updating Charts appVersion
+        uses: mikefarah/yq@v4.6.3
+        with:
+          cmd: yq eval '.appVersion = "${{ github.sha }}"' -i infrastructure/helm/Chart.yaml
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Bumping docker image tag to ${{ github.sha }}"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ github.token }}
