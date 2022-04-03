@@ -45,15 +45,15 @@ jobs:
 
       - uses: eskatos/gradle-command-action@v1
         with:
-          build-root-directory: backend
-          wrapper-directory: backend
+          build-root-directory: backend/api
+          wrapper-directory: backend/api
           arguments: installDist
   
       - name: Upload backend src code
         uses: actions/upload-artifact@v2
         with:
           name: bandcamper
-          path: backend
+          path: backend/api
           if-no-files-found: error
   
   quality:
@@ -66,12 +66,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Turn gradlew into executable file
-        run: chmod +x backend/gradlew
+        run: chmod +x backend/api/gradlew
 
       - uses: eskatos/gradle-command-action@v1
         with:
-          build-root-directory: backend
-          wrapper-directory: backend
+          build-root-directory: backend/api
+          wrapper-directory: backend/api
           arguments: test -PexcludeItTests
 
       - name: Run Codecov

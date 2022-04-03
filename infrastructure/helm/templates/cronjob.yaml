@@ -1,0 +1,28 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "bandcamper.fullname" . }}
+  labels:
+    {{- include "bandcamper.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.job.schedule }}
+  successfulJobsHistoryLimit: 0 
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            {{- include "bandcamper.selectorLabels" . | nindent 8 }}
+        spec:       
+          containers:
+          - name: {{ .Chart.Name }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }} 
+            ports:
+              - name: http
+                containerPort: 8080
+                protocol: TCP
+            {{- with .Values.imagePullSecrets }}
+            imagePullSecrets:
+              {{- toYaml . | nindent 8 }}
+            {{- end }}

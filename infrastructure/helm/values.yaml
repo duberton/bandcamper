@@ -4,12 +4,21 @@
 
 replicaCount: 1
 
-image:
-  repository: 168577352351.dkr.ecr.us-east-1.amazonaws.com/bandcamper
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+api:
+  image:
+    repository: 168577352351.dkr.ecr.us-east-1.amazonaws.com/bandcamper-api
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
 
+job:
+  image:
+    repository: 168577352351.dkr.ecr.us-east-1.amazonaws.com/bandcamper-job
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  schedule: "*/10 * * * *"
+  
 env:
   mongoHost: "minikube"
   mongoPort: "27017"

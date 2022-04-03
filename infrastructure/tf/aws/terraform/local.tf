@@ -1,5 +1,5 @@
 locals {
-  cidr_blocks_sucho = ["170.246.80.124/32"]
+  cidr_blocks_sucho = ["177.67.156.107/32"]
 
   # provider
   aws_credentials_path = var.aws_credentials_path != "" ? var.aws_credentials_path : "~/.aws/credentials"
