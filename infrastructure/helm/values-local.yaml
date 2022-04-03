@@ -6,14 +6,14 @@ replicaCount: 1
 
 api:
   image:
-    repository: 168577352351.dkr.ecr.us-east-1.amazonaws.com/bandcamper-api
+    repository: 168577352351.dkr.ecr.sa-east-1.amazonaws.com/bandcamper-api
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
 
 job:
   image:
-    repository: 168577352351.dkr.ecr.us-east-1.amazonaws.com/bandcamper-job
+    repository: 168577352351.dkr.ecr.sa-east-1.amazonaws.com/bandcamper-job
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
@@ -26,11 +26,13 @@ env:
   redisPort: "6379"
   sesHost: "minikube"
   sesPort: "4566"
+  dynamoDBHost: "minikube"
+  dynamoDBPort: "4566"
   jwtSecret: "secret"
   urlProvider: "http://bandcamper.com/api/callback"
 
 imagePullSecrets:
-  - name: docker-hub-creds
+  - name: aws-backend-ecr
 nameOverride: ""
 fullnameOverride: ""
 

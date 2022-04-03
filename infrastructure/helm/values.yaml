@@ -27,7 +27,7 @@ env:
   sesHost: "minikube"
   sesPort: "4566"
   jwtSecret: "secret"
-  urlProvider: "http://bandcamper.com/api/callback"
+  urlProvider: "http://bandcamper.net/api/callback"
 
 imagePullSecrets:
   - name: docker-hub-creds

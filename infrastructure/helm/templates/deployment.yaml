@@ -32,7 +32,7 @@ spec:
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           env:
             - name: MONGO_HOST
               value: {{ .Values.env.mongoHost }}
@@ -46,6 +46,10 @@ spec:
               value: {{ .Values.env.sesHost }}
             - name: SES_PORT
               value: {{ .Values.env.sesPort | quote }}
+            - name: DYNAMODB_HOST
+              value: {{ .Values.env.dynamoDBHost }}
+            - name: DYNAMODB_PORT
+              value: {{ .Values.env.dynamoDBPort | quote }}
             - name: JWT_SECRET
               value: {{ .Values.env.jwtSecret }}
             - name: GOOGLE_CLIENT_ID

@@ -1,28 +1,37 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "bandcamper.fullname" . }}
   labels:
     {{- include "bandcamper.labels" . | nindent 4 }}
 spec:
-  schedule: {{ .Values.job.schedule }}
-  successfulJobsHistoryLimit: 0 
+  schedule: {{ .Values.job.schedule | quote }}
   jobTemplate:
     spec:
       template:
-        metadata:
-          labels:
-            {{- include "bandcamper.selectorLabels" . | nindent 8 }}
-        spec:       
+        spec:
+          restartPolicy: Never
+          {{- with $.Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           containers:
-          - name: {{ .Chart.Name }}
-            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-            imagePullPolicy: {{ .Values.image.pullPolicy }} 
-            ports:
-              - name: http
-                containerPort: 8080
-                protocol: TCP
-            {{- with .Values.imagePullSecrets }}
-            imagePullSecrets:
-              {{- toYaml . | nindent 8 }}
-            {{- end }}
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.job.image.repository }}:{{ .Values.job.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.job.image.pullPolicy }}
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      key: awsAccessKey
+                      name: aws-credentials
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      key: awsSecretAccess
+                      name: aws-credentials
+                - name: AWS_DEFAULT_REGION
+                  valueFrom:
+                    secretKeyRef:
+                      key: awsRegion
+                      name: aws-credentials   
