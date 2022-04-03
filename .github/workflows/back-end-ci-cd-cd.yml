@@ -48,12 +48,25 @@ jobs:
           build-root-directory: backend/api
           wrapper-directory: backend/api
           arguments: installDist
+
+      - uses: eskatos/gradle-command-action@v1
+        with:
+          build-root-directory: backend/job
+          wrapper-directory: backend/job
+          arguments: installDist
   
-      - name: Upload backend src code
+      - name: Upload api src code
         uses: actions/upload-artifact@v2
         with:
-          name: bandcamper
+          name: bandcamper-api
           path: backend/api
+          if-no-files-found: error
+
+      - name: Upload job src code
+        uses: actions/upload-artifact@v2
+        with:
+          name: bandcamper-job
+          path: backend/job
           if-no-files-found: error
   
   quality:
@@ -83,10 +96,10 @@ jobs:
     needs: quality
 
     steps:
-      - name: Download backend src code
+      - name: Download backend api src code
         uses: actions/download-artifact@v2
         with:
-          name: bandcamper
+          name: bandcamper-api
 
       # - name: Docker Hub login
       #   uses: docker/login-action@v1 
@@ -109,14 +122,29 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: 'Builds the Docker image'
+      - name: 'Builds the api docker image'
         run: |
           docker build -t ${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }} .
 
-      - name: 'Pushes the image to ECR'
+      - name: 'Pushes the api image to ECR'
         run: |
           docker tag ${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }} ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }}
           docker push ${{ secrets.AWS_ECR_REPOSITORY }}/${{ secrets.AWS_ECR_SERVICE }}:${{ github.sha }}
+      
+      - name: Download backend job src code
+        uses: actions/download-artifact@v2
+        with:
+          name: bandcamper-job
+
+        
+      - name: 'Builds the job docker image'
+        run: |
+          docker build -t ${{ secrets.AWS_ECR_JOB_SERVICE }}:${{ github.sha }} .
+
+      - name: 'Pushes the job image to ECR'
+        run: |
+          docker tag ${{ secrets.AWS_ECR_JOB_SERVICE }}:${{ github.sha }} ${{ secrets.AWS_ECR_JOB_REPOSITORY }}/${{ secrets.AWS_ECR_JOB_SERVICE }}:${{ github.sha }}
+          docker push ${{ secrets.AWS_ECR_JOB_REPOSITORY }}/${{ secrets.AWS_ECR_JOB_SERVICE }}:${{ github.sha }}      
 
       
 
