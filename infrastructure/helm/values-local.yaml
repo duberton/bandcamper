@@ -17,7 +17,7 @@ job:
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: ""
-  schedule: "*/10 * * * *"
+  schedule: "*/1 * * * *"
 
 env:
   mongoHost: "minikube"
@@ -29,6 +29,7 @@ env:
   dynamoDBHost: "minikube"
   dynamoDBPort: "4566"
   jwtSecret: "secret"
+  apiUrl: "http://bandcamper.default"
   urlProvider: "http://bandcamper.com/api/callback"
 
 imagePullSecrets:

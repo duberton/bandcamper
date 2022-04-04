@@ -26,7 +26,10 @@ env:
   redisPort: "6379"
   sesHost: "minikube"
   sesPort: "4566"
+  dynamoDBHost: "minikube"
+  dynamoDBPort: "4566"
   jwtSecret: "secret"
+  apiUrl: "http://bandcamper.default"
   urlProvider: "http://bandcamper.net/api/callback"
 
 imagePullSecrets:

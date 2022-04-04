@@ -19,7 +19,7 @@ fun Application.module(testing: Boolean = false) {
     val appConfig = environment.config
 
     install(Koin) {
-        modules(listOf(okHttpModules, sesModule(appConfig)))
+        modules(listOf(okHttpModules(appConfig), sesModule(appConfig)))
     }
 
     val findReleasedAlbumsPort = get<FindReleasedAlbumsPort>()
