@@ -1,6 +1,6 @@
 import './App.css';
 import Home from './components/home';
-import Create from './components/create';
+import FollowRelease from './components/follow';
 import Header from './components/common/Header';
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store'
@@ -20,7 +20,6 @@ function App() {
           <div className="App">
             <Header />
             <Switch>
-              <Route path="/create" component={Create}></Route>
               <Route path="/" component={Home}></Route>
             </Switch>
           </div>

@@ -3,7 +3,7 @@ import { Label, FormGroup, Input, Button, Container, Row, Form } from "reactstra
 import { connect } from "react-redux";
 import ky from 'ky';
 
-function CreateAlbum(props) {
+function FollowRelease(props) {
 
   const [url, setUrl] = useState('');
 
@@ -19,6 +19,7 @@ function CreateAlbum(props) {
       body: JSON.stringify({ "url": url })
     }).json();
     setUrl('');
+    props.fetchAlbums();
   }
 
   const handleInputChange = event => {
@@ -51,4 +52,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(CreateAlbum);
+export default connect(mapStateToProps)(FollowRelease);

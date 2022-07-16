@@ -80,6 +80,7 @@ dependencies {
     implementation("org.litote.kmongo:kmongo-id:$kmongo_version")
     implementation("software.amazon.awssdk:ses:$aws_version")
     implementation("software.amazon.awssdk:dynamodb:$aws_version")
+    implementation("software.amazon.awssdk:apache-client:$aws_version")
     implementation("org.quartz-scheduler:quartz:$quartz_version")
     implementation("io.micrometer:micrometer-registry-prometheus:$prometheus_version")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version")

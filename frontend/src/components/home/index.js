@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Row, CardTitle, Col, Container, Table } from "reactstrap";
 import { connect } from "react-redux";
 import axios from 'axios';
+import FollowRelease from "../follow";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import ReactTimeAgo from 'react-time-ago'
@@ -13,7 +14,7 @@ function Home(props) {
   const [cursors, setCursors] = useState({});
 
   async function fetchAlbums(cursor) {
-    const params = { ...cursor, limit: 1 };
+    const params = { ...cursor, limit: 10 };
     const apiUrl = process.env.REACT_APP_BANDCAMPER_API_URL
     const { data } = await axios.get(`${apiUrl}/v1/album`, {
       params,
@@ -32,8 +33,12 @@ function Home(props) {
 
   return (
     <main>
-      <Container fluid style={{ marginTop: 100 }}>
-        <Container>
+      <Container fluid style={{ backgroundColor: '#000', display: 'flex', paddingTop: 100, height: '100%' }}>
+        <Container style={{ width: '30%' }}>
+          <h1 style={{ color: '#fff' }}>Follow your bandcamp releases</h1>
+            <FollowRelease fetchAlbums={fetchAlbums} />
+        </Container>
+        <Container style={{ width: '70%' }}>
           <Card style={{ borderRadius: 10, borderColor: '#00000020' }}>
             <CardTitle style={{ textAlign: 'left', marginLeft: 20, marginTop: 14, fontSize: 20 }}>Albums</CardTitle>
             <Table style={{ fontSize: 15 }}>

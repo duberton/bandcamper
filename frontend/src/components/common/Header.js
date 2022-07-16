@@ -5,7 +5,7 @@ import AuthenticatedDropdown from "./AuthenticatedDropdown";
 import { connect } from "react-redux";
 import ky from 'ky';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaravan } from '@fortawesome/free-solid-svg-icons'
+import { faCampground } from '@fortawesome/free-solid-svg-icons'
 
 function Header(props) {
 
@@ -28,41 +28,37 @@ function Header(props) {
   }
   const isAuthenticated = props.isAuthenticated;
   return (
-    <header>
-      <Container fluid className="bg-dark">
+    <header style={{ display: 'flex', marginTop: 10 }}>
+      <Container fluid style={{ backgroundColor: '#000', width: '30%' }}>
         <Container>
-          <Row>
-            <Col sm="9" md="9" lg="9">
-              <Navbar
-                dark
-                className="bg-dark">
-                <Nav>
-                  <NavbarBrand href="/" ><FontAwesomeIcon icon={faCaravan} size='2x' /></NavbarBrand>
-                  <NavItem className="m-auto">
-                    <NavLink style={{ color: 'white' }} href="/">bandcamper</NavLink>
-                  </NavItem>
-                  <NavItem className="m-auto">
-                    <NavLink style={{ color: 'white', marginLeft: 20, fontSize: 16 }} href="/create">create</NavLink>
-                  </NavItem>
-                </Nav>
-              </Navbar>
-            </Col>
-            <Col sm="3" md="3" lg="3" className="m-auto">
-              <Navbar style={{ justifyContent: 'flex-end' }}>
-                <Nav>
-                  <NavItem>
-                    {isAuthenticated ?
-                      <AuthenticatedDropdown /> : <GoogleLogin
-                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                        buttonText="Sign in with Google"
-                        onSuccess={loginSuccess}
-                        onFailure={loginFailure} />
-                    }
-                  </NavItem>
-                </Nav>
-              </Navbar>
-            </Col>
-          </Row>
+          <Navbar
+            dark
+            style={{ backgroundColor: '#000' }}>
+            <Nav>
+            <NavbarBrand href="/" ><FontAwesomeIcon icon={faCampground} size='2x' /></NavbarBrand>
+              <NavItem className="m-auto">
+                <NavLink style={{ color: 'white' }} href="/">bandcamper</NavLink>
+              </NavItem>
+            </Nav>
+          </Navbar>
+        </Container>
+      </Container>
+      <Container fluid style={{ backgroundColor: '#000', width: '70%' }}>
+        <Container>
+
+          <Navbar style={{ justifyContent: 'flex-end' }}>
+            <Nav>
+              <NavItem>
+                {isAuthenticated ?
+                  <AuthenticatedDropdown /> : <GoogleLogin
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                    buttonText="Sign in with Google"
+                    onSuccess={loginSuccess}
+                    onFailure={loginFailure} />
+                }
+              </NavItem>
+            </Nav>
+          </Navbar>
         </Container>
       </Container>
     </header>
