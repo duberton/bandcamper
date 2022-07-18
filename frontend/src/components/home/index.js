@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import axios from 'axios';
 import FollowRelease from "../follow";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import ReactTimeAgo from 'react-time-ago'
 
 
@@ -33,14 +33,17 @@ function Home(props) {
 
   return (
     <main>
-      <Container fluid style={{ backgroundColor: '#000', display: 'flex', paddingTop: 100, height: '100%' }}>
-        <Container style={{ width: '30%' }}>
-          <h1 style={{ color: '#fff' }}>Follow your bandcamp releases</h1>
-            <FollowRelease fetchAlbums={fetchAlbums} />
+      <Container fluid style={{ margin: 0, backgroundColor: '#000', display: 'flex', paddingTop: 100, height: '100%', justifyContent: 'center' }}>
+        <Container fluid style={{ width: '40%', display: 'flex' }}>
+          <Table>
+            <Row style={{ justifyContent: 'center' }}>
+              <h1 style={{ color: '#fff' }}>Follow your bandcamp <span style={{ color: '#4f746e' }}>releases</span></h1></Row>
+            <Row><FollowRelease fetchAlbums={fetchAlbums} /></Row>
+          </Table>
         </Container>
-        <Container style={{ width: '70%' }}>
-          <Card style={{ borderRadius: 10, borderColor: '#00000020' }}>
-            <CardTitle style={{ textAlign: 'left', marginLeft: 20, marginTop: 14, fontSize: 20 }}>Albums</CardTitle>
+        <Container fluid style={{ width: '60%', display: 'flex', justifyContent: 'center' }}>
+          <Card style={{ width: '80%', height: 'fit-content', borderRadius: 10, borderColor: '#00000020' }}>
+            <CardTitle style={{ textAlign: 'left', marginLeft: 20, marginTop: 14, fontSize: 20 }}>Releases</CardTitle>
             <Table style={{ fontSize: 15 }}>
               <thead>
                 <tr>
@@ -50,7 +53,7 @@ function Home(props) {
                   <th>Album</th>
                   <th>Release date</th>
                   <th>Alerts</th>
-                  <th>Creation</th>
+                  {/* <th>Creation</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -63,7 +66,7 @@ function Home(props) {
                     <td style={{ verticalAlign: 'middle' }}>{attributes.title}</td>
                     <td style={{ verticalAlign: 'middle' }}><ReactTimeAgo date={attributes.releaseDate} /></td>
                     <td style={{ verticalAlign: 'middle' }}><FontAwesomeIcon icon={faEnvelope} /></td>
-                    <td style={{ verticalAlign: 'middle' }}><ReactTimeAgo date={attributes.createdAt} /></td>
+                    {/* <td style={{ verticalAlign: 'middle' }}><ReactTimeAgo date={attributes.createdAt} /></td> */}
                   </tr>
                 })}
               </tbody>
@@ -73,10 +76,10 @@ function Home(props) {
                 <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => {
                   if (cursors.previous) fetchAlbums({ previous: cursors.previous })
                 }}
-                >Previous</Col>
+                ><FontAwesomeIcon icon={faAngleLeft} /> Previous</Col>
                 <Col sm="6" style={{ cursor: 'pointer' }} onClick={() => {
                   if (cursors.next) fetchAlbums({ next: cursors.next })
-                }}>Next</Col>
+                }}>Next <FontAwesomeIcon icon={faAngleRight} /></Col>
               </Row>
             </Container>
           </Card>

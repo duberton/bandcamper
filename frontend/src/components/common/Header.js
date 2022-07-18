@@ -28,7 +28,7 @@ function Header(props) {
   }
   const isAuthenticated = props.isAuthenticated;
   return (
-    <header style={{ display: 'flex', marginTop: 10 }}>
+    <header style={{ backgroundColor: 'black', display: 'flex', marginTop: 10, paddingLeft: 20, paddingRight: 20 }}>
       <Container fluid style={{ backgroundColor: '#000', width: '30%' }}>
         <Container>
           <Navbar
@@ -37,7 +37,7 @@ function Header(props) {
             <Nav>
             <NavbarBrand href="/" ><FontAwesomeIcon icon={faCampground} size='2x' /></NavbarBrand>
               <NavItem className="m-auto">
-                <NavLink style={{ color: 'white' }} href="/">bandcamper</NavLink>
+                <NavLink style={{ color: 'white' }} href="/"><h3>bandcamper</h3></NavLink>
               </NavItem>
             </Nav>
           </Navbar>

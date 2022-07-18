@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Label, FormGroup, Input, Button, Container, Row, Form } from "reactstrap";
+import { Label, FormGroup, Input, InputGroupText, InputGroup, InputGroupAddon, Button, Container, Row, Form } from "reactstrap";
 import { connect } from "react-redux";
 import ky from 'ky';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 
 function FollowRelease(props) {
 
@@ -28,16 +30,21 @@ function FollowRelease(props) {
   }
 
   return (
-    <main>
+    <main style={{ width: '100%' }}>
       <Container fluid style={{ marginTop: 50 }}>
-        <Container>
+        <Container style={{ width: '90%' }}>
           <Form onSubmit={createAlbum}>
             <FormGroup>
-              <Label for="url">Bandcamp album URL</Label>
-              <Input type="text" name="url" id="url" placeholder="https://artist.bandcamp.com" value={url}
-                onChange={handleInputChange} required pattern="(http|https):\/\/([a-zA-Z0-9]+.bandcamp.com)\/.*" />
+              <InputGroup style={{ width: '100%' }}>
+                <InputGroupAddon style={{ width: '100%' }} addonType="append">
+                  <Input style={{ width: '100%', height: '60px', borderRadius: 0 }} type="text" name="url" id="url" placeholder="https://artist.bandcamp.com OR https://artist.bandcamp.com/release" value={url}
+                    onChange={handleInputChange} required pattern="(http|https):\/\/([a-zA-Z0-9]+.bandcamp.com)\/.*" />
+                  <InputGroupText><FontAwesomeIcon icon={faAngleRight} /></InputGroupText>
+                  {/* <Label for="url">Bandcamp album URL</Label> */}
+                </InputGroupAddon>
+              </InputGroup>
             </FormGroup>
-            <Button>Submit</Button>
+            {/* <Button>Submit</Button> */}
           </Form>
         </Container>
       </Container>

@@ -29,7 +29,7 @@ function AuthenticatedDropdown(props) {
 
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-      <DropdownToggle caret className="bg-white " style={{ color: 'black', fontSize: 14 }}>
+      <DropdownToggle caret className="bg-white " style={{ width: 'fit-content', height: 50, color: 'black', fontSize: 15 }}>
         {props.user.name}
       </DropdownToggle>
       <DropdownMenu style={{ borderRadius: 6 }} >
