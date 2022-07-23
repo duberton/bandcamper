@@ -39,7 +39,7 @@ function FollowRelease(props) {
                 <InputGroupAddon style={{ width: '100%' }} addonType="append">
                   <Input style={{ width: '100%', height: '60px', borderRadius: 0 }} type="text" name="url" id="url" placeholder="https://artist.bandcamp.com OR https://artist.bandcamp.com/release" value={url}
                     onChange={handleInputChange} required pattern="(http|https):\/\/([a-zA-Z0-9]+.bandcamp.com)\/.*" />
-                  <InputGroupText><FontAwesomeIcon icon={faAngleRight} /></InputGroupText>
+                  <InputGroupText onClick={createAlbum}><FontAwesomeIcon icon={faAngleRight}/></InputGroupText>
                   {/* <Label for="url">Bandcamp album URL</Label> */}
                 </InputGroupAddon>
               </InputGroup>
